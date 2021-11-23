@@ -33,6 +33,7 @@ function curl_get_contents($url)
   curl_close($ch);
   return $data;
 }
+
 function curl($url, $method, $body, $header)
 {
   $curl = curl_init();
@@ -66,11 +67,12 @@ function generatetoken()
 }
 
 $zoho_auth = json_decode(generatetoken(), true);
+
 function getcreatordata($creatorurl)
 {
   $zoho_auth = json_decode(generatetoken(), true); 
   echo json_encode($zoho_auth);
-  $json = curl($creatorurl, "GET", "", $zoho_auth['creator']);
+  $json = curl($creatorurl, "GET", array(), $zoho_auth['creator']);
   return $json;
 }
 
@@ -83,12 +85,11 @@ if ($quotenumber != "") {
     $finalquote = $json[0];
     $storename = $finalquote['Stores']['display_value'];
     if (isset($finalquote['Generate_Payment_Link_Id_String'])) {
-      $paymentformrecordid =  $finalquote['Generate_Payment_Link_Id_String'];
+      $paymentformrecordid = $finalquote['Generate_Payment_Link_Id_String'];
     }
   } else {
     $Allpaymentlinkurl = $creatorbaseurl . "report/All_Payment_Links?Quoteno=" . urlencode($quotenumber) . "&raw=true;";
     $json = getcreatordata($Allpaymentlinkurl);
-
     echo "<br>".$Allpaymentlinkurl.json_encode($json);
     if ($json['code'] == 3000) {
       $finalquote = $json['data'][0];
