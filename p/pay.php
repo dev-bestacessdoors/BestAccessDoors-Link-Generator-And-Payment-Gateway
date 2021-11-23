@@ -85,9 +85,8 @@ if ($quotenumber != "") {
       $paymentformrecordid =  $finalquote['Generate_Payment_Link_Id_String'];
     }
   } else {
-    $Allpaymentlinkurl = $creatorbaseurl . "report/All_Payment_Links?Quoteno=" . urlencode($quotenumber) . "&raw=true;";
+    $Allpaymentlinkurl = $creatorbaseurl . "report/All_Payment_Links?Quoteno=" . urlencode($quotenumber) . "&raw=true";
     $json = getcreatordata($Allpaymentlinkurl);
-    // echo "<br>".$Allpaymentlinkurl.json_encode($json);
     if ($json['code'] == 3000) {
       $finalquote = $json['data'][0];
       $storename = $finalquote['Stores']['display_value'];
