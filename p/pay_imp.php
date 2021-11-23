@@ -70,8 +70,7 @@ $zoho_auth = json_decode(generatetoken(), true);
 
 function getcreatordata($creatorurl)
 {
-  $zoho_auth = json_decode(generatetoken(), true); 
-  echo json_encode($zoho_auth['creator']);
+  $zoho_auth = json_decode(generatetoken(), true);  
   $json = curl($creatorurl, "GET",'', $zoho_auth['creator']);
   return $json;
 }
@@ -89,7 +88,7 @@ if ($quotenumber != "") {
     }
   } else {
     $Allpaymentlinkurl = $creatorbaseurl . "report/All_Payment_Links?Quoteno=" . urlencode($quotenumber) . "&raw=true;";
-    $Allpaymentlinkurl = "https://creator.zoho.com/api/v2/zoho_zoho1502/quotes/report/All_Payment_Links?Quoteno=TESTBYT2311&raw=true";
+    // $Allpaymentlinkurl = "https://creator.zoho.com/api/v2/zoho_zoho1502/quotes/report/All_Payment_Links?Quoteno=TESTBYT2311&raw=true";
     $json = getcreatordata($Allpaymentlinkurl);
     echo "<br>".$Allpaymentlinkurl.json_encode($json);     
     if ($json['code'] == 3000) {
