@@ -4,9 +4,9 @@ $today_Date = date("Y-m-d h:i:sa");
 $start = "\n\n Started Execution @ $today_Date ";
 
 ob_start();
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 if (isset($_GET['h'])) {
   $quotenumberhash = $_GET['h'];
   $quotenumber = base64_decode($quotenumberhash);
@@ -78,6 +78,7 @@ $paymentformrecordid = null;
 if ($quotenumber != "") {
   $customquoteurl = $creatorbaseurl . "report/All_Custom_Quote_Payments?Quoteno=" . urlencode($quotenumber) . "&raw=true&Is_Active=true";
   $json = getcreatordata($customquoteurl);
+  echo json_encode($json);
   if ($json['code'] == 3000) {
     $finalquote = $json[0];
     $storename = $finalquote['Stores']['display_value'];
