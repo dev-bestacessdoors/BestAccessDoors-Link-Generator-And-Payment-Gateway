@@ -4,9 +4,9 @@ $today_Date = date("Y-m-d h:i:sa");
 $start = "\n\n Started Execution @ $today_Date ";
 
 ob_start();
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 if (isset($_GET['h'])) {
   $quotenumberhash = $_GET['h'];
   $quotenumber = base64_decode($quotenumberhash);
@@ -69,6 +69,7 @@ $zoho_auth = json_decode(generatetoken(), true);
 function getcreatordata($creatorurl)
 {
   $zoho_auth = json_decode(generatetoken(), true); 
+  echo json_encode($zoho_auth);
   $json = curl($creatorurl, "GET", "", $zoho_auth['creator']);
   return $json;
 }
@@ -87,7 +88,8 @@ if ($quotenumber != "") {
   } else {
     $Allpaymentlinkurl = $creatorbaseurl . "report/All_Payment_Links?Quoteno=" . urlencode($quotenumber) . "&raw=true;";
     $json = getcreatordata($Allpaymentlinkurl);
-    // echo "<br>".$Allpaymentlinkurl.json_encode($json);
+
+    echo "<br>".$Allpaymentlinkurl.json_encode($json);
     if ($json['code'] == 3000) {
       $finalquote = $json['data'][0];
       $storename = $finalquote['Stores']['display_value'];
