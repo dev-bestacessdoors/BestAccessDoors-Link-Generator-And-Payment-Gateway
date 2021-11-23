@@ -68,8 +68,7 @@ function generatetoken()
 $zoho_auth = json_decode(generatetoken(), true);
 function getcreatordata($creatorurl)
 {
-  $zoho_auth = json_decode(generatetoken(), true);
-  echo "auth:".json_encode($zoho_auth);
+  $zoho_auth = json_decode(generatetoken(), true); 
   $json = curl($creatorurl, "GET", "", $zoho_auth['creator']);
   return $json;
 }
@@ -79,7 +78,7 @@ $paymentformrecordid = null;
 if ($quotenumber != "") {
   $customquoteurl = $creatorbaseurl . "report/All_Custom_Quote_Payments?Quoteno=" . urlencode($quotenumber) . "&raw=true&Is_Active=true";
   $json = getcreatordata($customquoteurl);
-  echo json_encode($json);
+  echo $customquoteurl.json_encode($json);
   if ($json['code'] == 3000) {
     $finalquote = $json[0];
     $storename = $finalquote['Stores']['display_value'];
