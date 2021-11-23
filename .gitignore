@@ -1,0 +1,10 @@
+.env
+.htaccess
+/.well-known
+/generate2
+/p_stable
+/vendor
+composer.lock
+generate.zip
+px.zip
+/status
