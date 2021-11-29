@@ -4,9 +4,9 @@ $today_Date = date("Y-m-d h:i:sa");
 $start = "\n\n Started Execution @ $today_Date ";
 
 ob_start();
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 if (isset($_GET['h'])) {
   $quotenumberhash = $_GET['h'];
   $quotenumber = base64_decode($quotenumberhash);
@@ -33,6 +33,7 @@ function curl_get_contents($url)
   curl_close($ch);
   return $data;
 }
+
 function curl($url, $method, $body, $header)
 {
   $curl = curl_init();
@@ -66,27 +67,30 @@ function generatetoken()
 }
 
 $zoho_auth = json_decode(generatetoken(), true);
+
 function getcreatordata($creatorurl)
 {
-  $zoho_auth = json_decode(generatetoken(), true); 
-  $json = curl($creatorurl, "GET", "", $zoho_auth['creator']);
+  $zoho_auth = json_decode(generatetoken(), true);  
+  $json = curl($creatorurl, "GET",'', $zoho_auth['creator']);
   return $json;
 }
 
 $creatorbaseurl = 'https://creator.zoho.com/api/v2/zoho_zoho1502/quotes/';
 $paymentformrecordid = null;
 if ($quotenumber != "") {
-  $customquoteurl = $creatorbaseurl . "report/All_Custom_Quote_Payments?Quoteno=" . urlencode($quotenumber) . "&raw=true&Is_Active=true";
+  $customquoteurl = $creatorbaseurl . "report/All_Custom_Quote_Payments?Quoteno=" .$quotenumber . "&raw=true&Is_Active=true";
   $json = getcreatordata($customquoteurl); 
   if ($json['code'] == 3000) {
     $finalquote = $json[0];
     $storename = $finalquote['Stores']['display_value'];
     if (isset($finalquote['Generate_Payment_Link_Id_String'])) {
-      $paymentformrecordid =  $finalquote['Generate_Payment_Link_Id_String'];
+      $paymentformrecordid = $finalquote['Generate_Payment_Link_Id_String'];
     }
   } else {
-    $Allpaymentlinkurl = $creatorbaseurl . "report/All_Payment_Links?Quoteno=" . urlencode($quotenumber) . "&raw=true";
+    $Allpaymentlinkurl = $creatorbaseurl . "report/All_Payment_Links?Quoteno=" .$quotenumber. "&raw=true";
+    // $Allpaymentlinkurl = "https://creator.zoho.com/api/v2/zoho_zoho1502/quotes/report/All_Payment_Links?Quoteno=TESTBYT2311&raw=true";
     $json = getcreatordata($Allpaymentlinkurl);
+    echo "<br>".$Allpaymentlinkurl.json_encode($json);     
     if ($json['code'] == 3000) {
       $finalquote = $json['data'][0];
       $storename = $finalquote['Stores']['display_value'];
