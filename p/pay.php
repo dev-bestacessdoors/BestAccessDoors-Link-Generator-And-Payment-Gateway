@@ -73,6 +73,7 @@ function getcreatordata($creatorurl)
   return $json;
 }
 
+$not_found = false;
 $creatorbaseurl = 'https://creator.zoho.com/api/v2/zoho_zoho1502/quotes/';
 $paymentformrecordid = null;
 if ($quotenumber != "") {
@@ -105,7 +106,8 @@ if ($quotenumber != "") {
       $sales_person = $finalquote['Employee_Email'];
       $paymentformrecordid = $finalquote['ID'];
     } else {
-      error();
+      notfound();
+      $not_found = true;
     }
   }
   error_log($start . "\n\n pay.php - quotenumber is not null " . $quotenumber . "------------", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
@@ -133,7 +135,7 @@ if ($finalquote != "") {
   // if ($finalquote['Payment_Transaction_No'] != "" && $finalquote['Transaction_Status'] == "submitted_for_settlement" || $finalquote['Transaction_Status'] == "settled" || $finalquote['Transaction_Status'] == "settling" || $finalquote['Transaction_Status'] == "succeeded") {
     if ($finalquote['Payment_Transaction_No'] != "" && ($finalquote['Transaction_Status'] == "settled" || $finalquote['Transaction_Status'] == "settling" || $finalquote['Transaction_Status'] == "succeeded" )) {
     error_log($start . "\n\n pay.php - paymenttransacNo & Transaction_Status is not null ------------\n", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
-?>
+  ?>
     <html lang="en">
 
     <head>
@@ -775,7 +777,10 @@ if ($finalquote != "") {
   }
 } else {
   error_log($start . "\n\n error ------------------\n\n", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
-  echo error();
+  if ($not_found == false) {
+    echo error();
+  }
+  
 }
 //Not Authorized Access Message
 function error()
@@ -808,5 +813,41 @@ function error()
     </html>
   <?php
 }
+
+
+/*** Quote record not found  handled by T n 07DEC21*/
+
+function notfound()
+{
+    ?>
+    <html lang="en">
+
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+      <title>Quote Not Found</title>
+      <style>
+        h1 {
+          margin: 2em 0;
+        }
+      </style>
+    </head>
+
+    <body>
+      <div class="container">
+        <h1 class="text-center">Requested Quote not Found</h1>
+        <div class="jumbotron" align="center" style="border-bottom:5px inset #ffb7b7 !important">
+          We are sorry for the inconvenience, <br />
+          Please check with salesperson for further details...
+        </div>
+      </div>
+    </body>
+
+    </html>
+  <?php
+}
+
+
 ob_end_flush();
   ?>
