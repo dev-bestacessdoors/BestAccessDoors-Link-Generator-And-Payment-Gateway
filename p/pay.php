@@ -120,7 +120,8 @@ $province = file_get_contents("Province.json");
 if ($finalquote != "") {
   error_log($start . "\n\n pay.php - quote is not null:" . json_encode($finalquote) . "------------\n", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
   /* function templating the GET requests sent through this generator */
-  if ($finalquote['Payment_Transaction_No'] != "" && $finalquote['Transaction_Status'] == "submitted_for_settlement" || $finalquote['Transaction_Status'] == "settled" || $finalquote['Transaction_Status'] == "settling" || $finalquote['Transaction_Status'] == "succeeded") {
+  // if ($finalquote['Payment_Transaction_No'] != "" && $finalquote['Transaction_Status'] == "submitted_for_settlement" || $finalquote['Transaction_Status'] == "settled" || $finalquote['Transaction_Status'] == "settling" || $finalquote['Transaction_Status'] == "succeeded") {
+    if ($finalquote['Payment_Transaction_No'] != "" && ($finalquote['Transaction_Status'] == "settled" || $finalquote['Transaction_Status'] == "settling" || $finalquote['Transaction_Status'] == "succeeded" )) {
     error_log($start . "\n\n pay.php - paymenttransacNo & Transaction_Status is not null ------------\n", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
 ?>
     <html lang="en">
