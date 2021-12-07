@@ -83,14 +83,14 @@ if ($quotenumber != "") {
     $finalquote = $json['data'][0];
 
     /** assign payment processed record object as master by T on 07DEC21 */
-    foreach ($json['data'] as $key => $value) {
-      foreach ($value as $key1 => $value1) {
-        if ($value1['Transaction_Status'] == 'succeeded' ) {
-          $finalquote = $value1;
-        }
-      }
-      
-    }
+    // foreach ($json['data'] as $key => $value) {
+    //   foreach ($value as $key1 => $value1) {
+    //     if ($value1['Transaction_Status'] == 'succeeded' ) {
+    //       $finalquote = $value1;
+    //     }
+    //   }      
+    // }
+
     $storename = $finalquote['Stores']['display_value'];
     if (isset($finalquote['Generate_Payment_Link_Id_String'])) {
       $paymentformrecordid =  $finalquote['Generate_Payment_Link_Id_String'];
