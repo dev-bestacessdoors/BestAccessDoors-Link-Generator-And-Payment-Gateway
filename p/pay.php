@@ -80,7 +80,7 @@ if ($quotenumber != "") {
   $json = getcreatordata($customquoteurl);
   error_log($start . "\n\n pay.php - All_Custom_Quote_Payments res: " . json_encode($json), 3, "logs/pay/pay-log" . date("d-m-Y") . ".log"); 
   if ($json['code'] == 3000) {
-    $finalquote = $json[0];
+    $finalquote = $json['data'][0];
     $storename = $finalquote['Stores']['display_value'];
     if (isset($finalquote['Generate_Payment_Link_Id_String'])) {
       $paymentformrecordid =  $finalquote['Generate_Payment_Link_Id_String'];
@@ -118,7 +118,7 @@ include 'sendnotification.php';
 
 $province = file_get_contents("Province.json");
 if ($finalquote != "") {
-  error_log($start . "\n\n pay.php - quote is not null:" . json_encode($finalquote) . "------------\n", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
+  error_log($start . "\n\n pay.php - quote obj:" . json_encode($finalquote) . "------------\n", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
   /* function templating the GET requests sent through this generator */
   // if ($finalquote['Payment_Transaction_No'] != "" && $finalquote['Transaction_Status'] == "submitted_for_settlement" || $finalquote['Transaction_Status'] == "settled" || $finalquote['Transaction_Status'] == "settling" || $finalquote['Transaction_Status'] == "succeeded") {
     if ($finalquote['Payment_Transaction_No'] != "" && ($finalquote['Transaction_Status'] == "settled" || $finalquote['Transaction_Status'] == "settling" || $finalquote['Transaction_Status'] == "succeeded" )) {
