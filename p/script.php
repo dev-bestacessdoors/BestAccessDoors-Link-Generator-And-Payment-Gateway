@@ -1064,7 +1064,7 @@
         var shipcountry = document.getElementById('Shipcountry').value; 
         var shipstate = document.getElementById('Shipstate').value;
         var Shipcity = document.getElementById('Shipcity').value;  
-        var avaurl = 'https://1.door-pay.com/api/avalatax/byzip/' + zipcode + '/' + Shipcity +"::"+ shipstate  ;
+        var avaurl = 'https://door-pay.com/TestRequest.php?zipcode=' + zipcode + '&Shipcity=' + Shipcity +'&shipstate='+ shipstate  ;
         console.log("zipcode:" + zipcode + avaurl); 
         if (Shipcountry && shipcountry == "United States" && zipcode != '' && Shipcity != '' && shipstate != '') {           
             $.ajax({
