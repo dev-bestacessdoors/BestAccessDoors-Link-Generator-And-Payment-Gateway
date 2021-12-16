@@ -13,72 +13,72 @@ if(file_exists(__DIR__ . "/../.env")) {
 
 /*** currently we are not using Braintree   */
 
-// if ($storename == "Access_Doors_Canada") {
-//   $gateway = new Braintree\Gateway([
-//       'environment' => getenv('ADC_BT_ENVIRONMENT'),
-//       'merchantId' => getenv('ADC_BT_MERCHANT_ID'),
-//       'publicKey' => getenv('ADC_BT_PUBLIC_KEY'),
-//       'privateKey' => getenv('ADC_BT_PRIVATE_KEY')
-//   ]);
-// }elseif ($storename == "Acudor_Access_Panels") {
-//   $gateway = new Braintree\Gateway([
-//       'environment' => getenv('AAP_BT_ENVIRONMENT'),
-//       'merchantId' => getenv('AAP_BT_MERCHANT_ID'),
-//       'publicKey' => getenv('AAP_BT_PUBLIC_KEY'),
-//       'privateKey' => getenv('AAP_BT_PRIVATE_KEY')
-//   ]);
-// }elseif ($storename == "Access_Doors_And_Panels") {
-//   $gateway = new Braintree\Gateway([
-//       'environment' => getenv('ADP_BT_ENVIRONMENT'),
-//       'merchantId' => getenv('ADP_BT_MERCHANT_ID'),
-//       'publicKey' => getenv('ADP_BT_PUBLIC_KEY'),
-//       'privateKey' => getenv('ADP_BT_PRIVATE_KEY')
-//   ]);
-// }elseif ($storename == "Best_Access_Doors") {
-//   $gateway = new Braintree\Gateway([
-//       'environment' => getenv('BAD_BT_ENVIRONMENT'),
-//       'merchantId' => getenv('BAD_BT_MERCHANT_ID'),
-//       'publicKey' => getenv('BAD_BT_PUBLIC_KEY'),
-//       'privateKey' => getenv('BAD_BT_PRIVATE_KEY')
-//   ]);
-// }elseif ($storename == "Best_Access_Doors_Canada") {
-//   $gateway = new Braintree\Gateway([
-//       'environment' => getenv('BADC_BT_ENVIRONMENT'),
-//       'merchantId' => getenv('BADC_BT_MERCHANT_ID'),
-//       'publicKey' => getenv('BADC_BT_PUBLIC_KEY'),
-//       'privateKey' => getenv('BADC_BT_PRIVATE_KEY')
-//   ]);
-// }elseif ($storename == "California_Access_Doors") {
-//   $gateway = new Braintree\Gateway([
-//       'environment' => getenv('CAD_BT_ENVIRONMENT'),
-//       'merchantId' => getenv('CAD_BT_MERCHANT_ID'),
-//       'publicKey' => getenv('CAD_BT_PUBLIC_KEY'),
-//       'privateKey' => getenv('CAD_BT_PRIVATE_KEY')
-//   ]);
-// }elseif ($storename == "Max_Supply") {
-//   $gateway = new Braintree\Gateway([
-//       'environment' => getenv('MAX_BT_ENVIRONMENT'),
-//       'merchantId' => getenv('MAX_BT_MERCHANT_ID'),
-//       'publicKey' => getenv('MAX_BT_PUBLIC_KEY'),
-//       'privateKey' => getenv('MAX_BT_PRIVATE_KEY')
-//   ]);
-// }elseif ($storename == "Public_Furniture") {
-//   $gateway = new Braintree\Gateway([
-//       'environment' => getenv('PF_BT_ENVIRONMENT'),
-//       'merchantId' => getenv('PF_BT_MERCHANT_ID'),
-//       'publicKey' => getenv('PF_BT_PUBLIC_KEY'),
-//       'privateKey' => getenv('PF_BT_PRIVATE_KEY')
-//   ]);
-// }elseif ($storename == "Best_Roof_Hatches") {
-//   $gateway = new Braintree\Gateway([
-//       'environment' => getenv('PF_BT_ENVIRONMENT'),
-//       'merchantId' => getenv('PF_BT_MERCHANT_ID'),
-//       'publicKey' => getenv('PF_BT_PUBLIC_KEY'),
-//       'privateKey' => getenv('PF_BT_PRIVATE_KEY')
-//   ]);
-// }else {
-//   echo "Invalid Store Name";
-// }
+if ($storename == "Access_Doors_Canada") {
+  $gateway = new Braintree\Gateway([
+      'environment' => getenv('ADC_BT_ENVIRONMENT'),
+      'merchantId' => getenv('ADC_BT_MERCHANT_ID'),
+      'publicKey' => getenv('ADC_BT_PUBLIC_KEY'),
+      'privateKey' => getenv('ADC_BT_PRIVATE_KEY')
+  ]);
+}elseif ($storename == "Acudor_Access_Panels") {
+  $gateway = new Braintree\Gateway([
+      'environment' => getenv('AAP_BT_ENVIRONMENT'),
+      'merchantId' => getenv('AAP_BT_MERCHANT_ID'),
+      'publicKey' => getenv('AAP_BT_PUBLIC_KEY'),
+      'privateKey' => getenv('AAP_BT_PRIVATE_KEY')
+  ]);
+}elseif ($storename == "Access_Doors_And_Panels") {
+  $gateway = new Braintree\Gateway([
+      'environment' => getenv('ADP_BT_ENVIRONMENT'),
+      'merchantId' => getenv('ADP_BT_MERCHANT_ID'),
+      'publicKey' => getenv('ADP_BT_PUBLIC_KEY'),
+      'privateKey' => getenv('ADP_BT_PRIVATE_KEY')
+  ]);
+}elseif ($storename == "Best_Access_Doors") {
+  $gateway = new Braintree\Gateway([
+      'environment' => getenv('BAD_BT_ENVIRONMENT'),
+      'merchantId' => getenv('BAD_BT_MERCHANT_ID'),
+      'publicKey' => getenv('BAD_BT_PUBLIC_KEY'),
+      'privateKey' => getenv('BAD_BT_PRIVATE_KEY')
+  ]);
+}elseif ($storename == "Best_Access_Doors_Canada") {
+  $gateway = new Braintree\Gateway([
+      'environment' => getenv('BADC_BT_ENVIRONMENT'),
+      'merchantId' => getenv('BADC_BT_MERCHANT_ID'),
+      'publicKey' => getenv('BADC_BT_PUBLIC_KEY'),
+      'privateKey' => getenv('BADC_BT_PRIVATE_KEY')
+  ]);
+}elseif ($storename == "California_Access_Doors") {
+  $gateway = new Braintree\Gateway([
+      'environment' => getenv('CAD_BT_ENVIRONMENT'),
+      'merchantId' => getenv('CAD_BT_MERCHANT_ID'),
+      'publicKey' => getenv('CAD_BT_PUBLIC_KEY'),
+      'privateKey' => getenv('CAD_BT_PRIVATE_KEY')
+  ]);
+}elseif ($storename == "Max_Supply") {
+  $gateway = new Braintree\Gateway([
+      'environment' => getenv('MAX_BT_ENVIRONMENT'),
+      'merchantId' => getenv('MAX_BT_MERCHANT_ID'),
+      'publicKey' => getenv('MAX_BT_PUBLIC_KEY'),
+      'privateKey' => getenv('MAX_BT_PRIVATE_KEY')
+  ]);
+}elseif ($storename == "Public_Furniture") {
+  $gateway = new Braintree\Gateway([
+      'environment' => getenv('PF_BT_ENVIRONMENT'),
+      'merchantId' => getenv('PF_BT_MERCHANT_ID'),
+      'publicKey' => getenv('PF_BT_PUBLIC_KEY'),
+      'privateKey' => getenv('PF_BT_PRIVATE_KEY')
+  ]);
+}elseif ($storename == "Best_Roof_Hatches") {
+  $gateway = new Braintree\Gateway([
+      'environment' => getenv('PF_BT_ENVIRONMENT'),
+      'merchantId' => getenv('PF_BT_MERCHANT_ID'),
+      'publicKey' => getenv('PF_BT_PUBLIC_KEY'),
+      'privateKey' => getenv('PF_BT_PRIVATE_KEY')
+  ]);
+}else {
+  echo "Invalid Store Name";
+}
 
 if ($storename == "Access_Doors_Canada") {
   $logourl = 'logo/adc.jpg';

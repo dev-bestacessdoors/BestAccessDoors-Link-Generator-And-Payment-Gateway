@@ -1070,6 +1070,7 @@
             $.ajax({
                 url: avaurl,
                 type: 'GET',
+                "crossDomain": true,
                 success: function(result) {   
                     if (result.code != 200)
                     {
