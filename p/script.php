@@ -1064,8 +1064,8 @@
         var shipcountry = document.getElementById('Shipcountry').value; 
         var shipstate = document.getElementById('Shipstate').value;
         var Shipcity = document.getElementById('Shipcity').value;  
-        var avaurl = 'https://door-pay.com/TestRequest.php?zipcode=' + zipcode + '&Shipcity=' + Shipcity +'&shipstate='+ shipstate  ;
-        console.log("zipcode:" + zipcode + avaurl); 
+        var avaurl = 'https://door-pay.com/p/AvalaraCORSWorkaround.php?zipcode=' + zipcode + '&Shipcity=' + Shipcity +'&shipstate='+ shipstate  ;
+        // console.log("zipcode:" + zipcode + avaurl); 
         if (Shipcountry && shipcountry == "United States" && zipcode != '' && Shipcity != '' && shipstate != '') {           
             $.ajax({
                 url: avaurl,
@@ -1075,7 +1075,7 @@
                     let json_result = JSON.parse(result);
                     if (json_result.code != 200)
                     {
-                        console.log("failed to get Avatax"); 
+                        // console.log("failed to get Avatax"); 
                         document.getElementById('taxclass').value = ''; 
                         if (json_result.info.hasOwnProperty('zipcode_by_city') &&  json_result.info['zipcode_by_city'].length > 0)
                         {
@@ -1124,7 +1124,7 @@
                         } 
                         tax_class = parseFloat(json_result.info[0]['total_sales_tax']); 
                         console.log("tax_class:" + tax_class);  
-                        console.log("tax_class_status:");
+                        // console.log("tax_class_status:");
                         document.getElementById('taxclass').value = tax_class;
                         caltotal();                       
                     }
