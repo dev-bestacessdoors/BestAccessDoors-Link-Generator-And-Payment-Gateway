@@ -348,7 +348,7 @@ if ($finalquote != "") {
       }
     </style>
 
-    <body onload="initialize()">
+    <body>
       <?php require_once("../includes/header.php"); ?>
       <div class="support-bar-two bg-white home-6" style="padding-top: 0px;padding-bottom: 0px;">
         <div class="container">
@@ -774,6 +774,9 @@ if ($finalquote != "") {
 
     <?php
     require('script.php');
+    ?>
+    <script>initialize();</script>
+    <?php
   }
 } else {
   error_log($start . "\n\n error ------------------\n\n", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");

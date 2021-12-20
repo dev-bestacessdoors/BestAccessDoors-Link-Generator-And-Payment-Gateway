@@ -1064,22 +1064,24 @@
         var shipcountry = document.getElementById('Shipcountry').value; 
         var shipstate = document.getElementById('Shipstate').value;
         var Shipcity = document.getElementById('Shipcity').value;  
-        var avaurl = 'https://1.door-pay.com/api/avalatax/byzip/' + zipcode + '/' + Shipcity +"::"+ shipstate  ;
-        console.log("zipcode:" + zipcode + avaurl); 
+        var avaurl = 'https://door-pay.com/p/AvalaraCORSWorkaround.php?zipcode=' + zipcode + '&Shipcity=' + Shipcity +'&shipstate='+ shipstate  ;
+        // console.log("zipcode:" + zipcode + avaurl); 
         if (Shipcountry && shipcountry == "United States" && zipcode != '' && Shipcity != '' && shipstate != '') {           
             $.ajax({
                 url: avaurl,
                 type: 'GET',
+                "crossDomain": true,
                 success: function(result) {   
-                    if (result.code != 200)
+                    let json_result = JSON.parse(result);
+                    if (json_result.code != 200)
                     {
-                        console.log("failed to get Avatax"); 
+                        // console.log("failed to get Avatax"); 
                         document.getElementById('taxclass').value = ''; 
-                        if (result.info.hasOwnProperty('zipcode_by_city') &&  result.info['zipcode_by_city'].length > 0)
+                        if (json_result.info.hasOwnProperty('zipcode_by_city') &&  json_result.info['zipcode_by_city'].length > 0)
                         {
                             document.getElementById($eid).value = '';
                             var avaiable_zipcodes = '';
-                            var ziplist = result.info['zipcode_by_city'][0];
+                            var ziplist = json_result.info['zipcode_by_city'][0];
                             for (var key in ziplist)
                             {
                                 var value = ziplist[key]; 
@@ -1091,13 +1093,13 @@
                                 document.getElementById('Shippostcode_validate').innerHTML = "Please pick listed your zipcode.<br>" + avaiable_zipcodes +" <span> <small style='color:gray;'>your zipcode not listed then please contact salesperson.</small></span>";                            
                             }
 
-                        }else if(result.info.hasOwnProperty('city_by_state') && result.info['city_by_state'].length > 0)
+                        }else if(json_result.info.hasOwnProperty('city_by_state') && json_result.info['city_by_state'].length > 0)
                         { 
                             var elmid_city = "updatezipcode(this.options[this.selectedIndex].value, 'Shipcity')";
                             document.getElementById('Shipcity').value = '';
                             var avaiable_city, optionlist = '';
                             var optionselect = '<select tabindex="8" id="Shipcity_validate_select" class="input-field" placeholder="Enter state/province..." ><option>Please select city</option>';
-                            var citylist = result.info['city_by_state'][0];
+                            var citylist = json_result.info['city_by_state'][0];
                             for (var key in citylist)
                             {
                                 var value = citylist[key];  
@@ -1117,12 +1119,12 @@
                     } else 
                     {   
                         document.getElementById('Shippostcode_validate').innerHTML = ''; 
-                        if (result.info["0"]) {
-                            result.info[0] = result.info["0"];
+                        if (json_result.info["0"]) {
+                            json_result.info[0] = json_result.info["0"];
                         } 
-                        tax_class = parseFloat(result.info[0]['total_sales_tax']); 
+                        tax_class = parseFloat(json_result.info[0]['total_sales_tax']); 
                         console.log("tax_class:" + tax_class);  
-                        console.log("tax_class_status:");
+                        // console.log("tax_class_status:");
                         document.getElementById('taxclass').value = tax_class;
                         caltotal();                       
                     }
