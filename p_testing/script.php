@@ -193,7 +193,7 @@
             }
         });
         var get_tax_class = "";
-        if (getprovinceobj[0]['Total_Tax_Rate'] != "") {
+        if (getprovinceobj[0]['Total_Tax_Rate'] != "" && tax_exempt == false) {
             get_tax_class = getprovinceobj[0]['Total_Tax_Rate'];
             settaxtclass(get_tax_class);
             caltotal();
