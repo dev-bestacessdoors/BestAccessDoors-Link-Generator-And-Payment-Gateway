@@ -1066,8 +1066,8 @@
         var shipstate = document.getElementById('Shipstate').value;
         var Shipcity = document.getElementById('Shipcity').value;
         var avaurl = 'https://door-pay.com/p/AvalaraCORSWorkaround.php?zipcode=' + zipcode + '&Shipcity=' + Shipcity +'&shipstate='+ shipstate  ;
-        // console.log("zipcode:" + zipcode + avaurl);
-        if (Shipcountry && shipcountry == "United States" && zipcode != '' && Shipcity != '' && shipstate != '' && tax_exempt == false) {           
+        console.log("zipcode:" + tax_exempt);
+        if (Shipcountry && shipcountry == "United States" && zipcode != '' && Shipcity != '' && shipstate != '' && tax_exempt == false) {
             $.ajax({
                 url: avaurl,
                 type: 'GET',
