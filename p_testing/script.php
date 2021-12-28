@@ -703,6 +703,7 @@
         post_dataObject.customer_email = document.getElementById("c_email").value;
         post_dataObject.customer_phonenumber = document.getElementById("c_phonenumber").value;
         post_dataObject.Bcompanyname = document.getElementById("company").value;
+        post_dataObject.tax_exempt = '<?php echo $finalquote['Customer_is_Tax_Exempted']; ?>'
         post_dataObject.Baddress1 = document.getElementById("address1").value;
         post_dataObject.Baddress2 = document.getElementById("address2").value;
         post_dataObject.Bcity = document.getElementById("city").value;
