@@ -273,6 +273,7 @@ if ($result->success || !is_null($result->transaction))
             $creator_obj["Card_Last_4_Digit"] =  $creditCard['last4'];
             $creator_obj["Payment_Transaction_No"] =  $transaction->id;
             $creator_obj["Amount_Paid"] = $transaction->amount;
+            $creator_obj["Tax_Exempted"] =  $tax_exempt;
 
       $reqbody['data'] = $creator_obj;
 
@@ -351,6 +352,7 @@ if ($result->success || !is_null($result->transaction))
             $creator_obj["Ship_Notes"] =  $Shipnotes;
             $creator_obj["Transaction_Status"] =  $transaction->status;
             $creator_obj["Payment_Method"] =  $paymentmethod;
+            $creator_obj["Tax_Exempted"] =  $tax_exempt;
             // $creator_obj["Payment_Gateway"] =  $paymentgateway;
             $creator_obj["Card_Last_4_Digit"] =  $creditCard['last4'];
             $creator_obj["Payment_Transaction_No"] =  $transaction->id;
