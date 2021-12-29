@@ -302,6 +302,8 @@ if ($result->success || !is_null($result->transaction))
           trigger_error('checkout page: create quote address response-error ' .json_encode ($UpdateQuoteErr,true).'--- <br>', E_USER_NOTICE);
       }
       else {
+
+          trigger_error('checkout page: create quote address request  ' .json_encode ($reqbody,true).'--- <br>', E_USER_NOTICE);
           trigger_error('checkout page: create quote address response-success  ' .json_encode ($UpdateQuoteResponse,true).'--- <br>', E_USER_NOTICE);
       }
 
