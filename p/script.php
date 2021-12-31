@@ -46,7 +46,7 @@
     .invalidfield {
         border-bottom-color: 2px solid #ba281e;
     }
-    
+
     .hover-underline-animation{
         display: inline-block;
         position: relative;
@@ -89,6 +89,7 @@
         $(".braintree-large-button.braintree-toggle").hide()
     }
     var tax_class = "<?php echo $finalquote['Tax_Class'] ?: 0 ?>";
+    var tax_exempt = "<?php echo $finalquote['Customer_is_Tax_Exempted'] ?>";
     var province = <?php echo $province ?>;
     var country = <?php echo "\"" . $Shipcountry . "\""; ?>;
     if (country != "") {
@@ -183,20 +184,20 @@
         }
     }
 
-    function fetch_province(provinceval, countryscope) { 
-        countryval = document.getElementById(countryscope).value; 
+    function fetch_province(provinceval, countryscope) {
+        countryval = document.getElementById(countryscope).value;
         province_curr = province[countryval];
         var getprovinceobj = province_curr.filter(function(obj) {
-            if (obj.Province == provinceval) { 
+            if (obj.Province == provinceval) {
                 return obj;
             }
         });
         var get_tax_class = "";
-        if (getprovinceobj[0]['Total_Tax_Rate'] != "") {
+        if (getprovinceobj[0]['Total_Tax_Rate'] != "" && tax_exempt == false) {
             get_tax_class = getprovinceobj[0]['Total_Tax_Rate'];
             settaxtclass(get_tax_class);
-            caltotal(); 
-        } else { 
+            caltotal();
+        } else {
             settaxtclass(get_tax_class);
             fetchavatax('Shippostcode');
             caltotal();
@@ -207,7 +208,7 @@
         tax_class = get_tax_class;
         document.getElementById('taxclass').value = tax_class;
     }
- 
+
 
     var storename = '<?php echo $storename; ?>';
 
@@ -324,35 +325,35 @@
     });
 
     function caltotal() {
- 
+
         var quotecost = document.getElementById("quotecost").innerHTML;
-        quotecost = quotecost.replace(/^\D+/g, ''); 
+        quotecost = quotecost.replace(/^\D+/g, '');
 
         var shippingcost = document.getElementById("shipingcost").innerHTML;
-        shippingcost = shippingcost.replace(/^\D+/g, ''); 
+        shippingcost = shippingcost.replace(/^\D+/g, '');
 
         tax = document.getElementById("tax").innerHTML;
         tax = tax.replace(/\,/g, '');
         tax = tax.replace(/^\D+/g, '');
 
         if (quotecost == "") {
-            var totalamount = 0; 
+            var totalamount = 0;
             document.getElementById("total").innerHTML = "$ 0.00";
             document.getElementById("amount").value = 0;
             document.getElementById("agreetotal").innerHTML = "$0.00";
         } else if (quotecost != "") {
-            Tax_Class = document.getElementById('taxclass').value; 
+            Tax_Class = document.getElementById('taxclass').value;
             if (Tax_Class == '') {
                 Tax_Class = "<?php echo $finalquote['Tax_Class'] ?>";
                 Tax_Class = tax_class;
-            } 
+            }
             // var Tax_Class = tax_class;
             var currency = "<?php echo $currency ?>";
             var current_country = document.getElementById("Shipcountry").value;
             if (Tax_Class != "") {
                 var overal_subtotal = parseFloat(quotecost) + parseFloat(shippingcost);
                 tax = (overal_subtotal * Tax_Class) / 100;
-                var totalamount = overal_subtotal + parseFloat(tax); 
+                var totalamount = overal_subtotal + parseFloat(tax);
                 document.getElementById("taxtxt").innerHTML = "Tax ( " + Tax_Class + "% )";
                 document.getElementById("tax").innerHTML = "$ " + parseFloat(tax).toFixed(2);
                 document.getElementById("subtotal").innerHTML = "$ " + parseFloat(overal_subtotal).toFixed(2);
@@ -361,7 +362,7 @@
                 document.getElementById("agreetotal").innerHTML = "$" + parseFloat(totalamount).toFixed(2);
             } else {
                 var overal_subtotal = parseFloat(quotecost) + parseFloat(shippingcost);
-                var totalamount = overal_subtotal; 
+                var totalamount = overal_subtotal;
                 document.getElementById("taxtxt").innerHTML = '';
                 document.getElementById("tax").innerHTML = '';
                 document.getElementById("subtotal").innerHTML = "$ " + parseFloat(overal_subtotal).toFixed(2);
@@ -434,9 +435,9 @@
             removeA(missingfieldnames, 'Shipcompany');
             removeA(missingfieldnames, 'notes');
             removeA(missingfieldnames, '');
- 
+
             for (let i = 0; i < missinglist.length; i++) {
-                $('#' + missinglist[i]).css("border-bottom-color", "#f00"); 
+                $('#' + missinglist[i]).css("border-bottom-color", "#f00");
             }
 
             var index = missinglist.indexOf("c_firstname");
@@ -551,11 +552,11 @@
                     document.getElementById("stripe_card").style.display = "block";
                 }else{
                     document.getElementById("stripepaynow").style.display = "none";
-                    document.getElementById("stripe_card").style.display = "none"; 
+                    document.getElementById("stripe_card").style.display = "none";
                 }
 
                 if (Store_payment_gateway == 'Braintree') {
-                    document.getElementById("btnverzenden").style.display = "block"; 
+                    document.getElementById("btnverzenden").style.display = "block";
                 }
             } else {
 
@@ -570,7 +571,7 @@
                 alert("Please fill in the following fields:" + missinglist);
                 $("#agree").prop("checked", false);
             }
-        } else { 
+        } else {
             console.log("diagree");
             if (controller != 1 || controller != true) {
                 $(".braintree-option").hide();
@@ -582,7 +583,7 @@
             }
             $("#samebilling").prop("checked", false);
             document.getElementById("Billingtext").innerHTML = "My Billing address is the same as my Shipping address";
-            document.getElementById("arrow").style.display = ""; 
+            document.getElementById("arrow").style.display = "";
             document.getElementById("stripe_card").style.display = "none";
             billingenable();
             shippingenable();
@@ -601,7 +602,7 @@
     $('#stripepaynow').click(function(event) {
         document.getElementById('stripepaynow').disabled = true;
         event.preventDefault();
-        var bodyobj = getformdata('stripe'); 
+        var bodyobj = getformdata('stripe');
         stripe.createToken(card).then(function(result) {
             if (result.error) {
                 var errorElement = document.getElementById('card-errors');
@@ -657,7 +658,7 @@
             Tax_CAD = tax.replace(/^\D+/g, '');
             var overal_subtotal = parseFloat(quotecost) + parseFloat(shippingcost);
             // tax = (overal_subtotal * Tax_Class )/100;
-            var totalamount = overal_subtotal + parseFloat(Tax_CAD); 
+            var totalamount = overal_subtotal + parseFloat(Tax_CAD);
         } else {
             var overal_subtotal = parseFloat(quotecost) + parseFloat(shippingcost);
             var totalamount = overal_subtotal;
@@ -702,6 +703,7 @@
         post_dataObject.customer_email = document.getElementById("c_email").value;
         post_dataObject.customer_phonenumber = document.getElementById("c_phonenumber").value;
         post_dataObject.Bcompanyname = document.getElementById("company").value;
+        post_dataObject.tax_exempt = tax_exempt;
         post_dataObject.Baddress1 = document.getElementById("address1").value;
         post_dataObject.Baddress2 = document.getElementById("address2").value;
         post_dataObject.Bcity = document.getElementById("city").value;
@@ -1061,22 +1063,22 @@
      /** Calculate Shipping tax for US stores */
      function fetchavatax($eid){
         var zipcode = document.getElementById($eid).value;
-        var shipcountry = document.getElementById('Shipcountry').value; 
+        var shipcountry = document.getElementById('Shipcountry').value;
         var shipstate = document.getElementById('Shipstate').value;
-        var Shipcity = document.getElementById('Shipcity').value;  
+        var Shipcity = document.getElementById('Shipcity').value;
         var avaurl = 'https://door-pay.com/p/AvalaraCORSWorkaround.php?zipcode=' + zipcode + '&Shipcity=' + Shipcity +'&shipstate='+ shipstate  ;
-        // console.log("zipcode:" + zipcode + avaurl); 
-        if (Shipcountry && shipcountry == "United States" && zipcode != '' && Shipcity != '' && shipstate != '') {           
+        console.log("zipcode:" + tax_exempt);
+        if (Shipcountry && shipcountry == "United States" && zipcode != '' && Shipcity != '' && shipstate != '' && tax_exempt == false) {
             $.ajax({
                 url: avaurl,
                 type: 'GET',
                 "crossDomain": true,
-                success: function(result) {   
+                success: function(result) {
                     let json_result = JSON.parse(result);
                     if (json_result.code != 200)
                     {
-                        // console.log("failed to get Avatax"); 
-                        document.getElementById('taxclass').value = ''; 
+                        // console.log("failed to get Avatax");
+                        document.getElementById('taxclass').value = '';
                         if (json_result.info.hasOwnProperty('zipcode_by_city') &&  json_result.info['zipcode_by_city'].length > 0)
                         {
                             document.getElementById($eid).value = '';
@@ -1084,17 +1086,17 @@
                             var ziplist = json_result.info['zipcode_by_city'][0];
                             for (var key in ziplist)
                             {
-                                var value = ziplist[key]; 
+                                var value = ziplist[key];
                                 var zipcodes = '<span id="zip-'+value+'" class="hover-underline-animation" onclick="updatezipcode(\''+value+'\',\''+$eid+'\')">'+value+'</span>'
                                 avaiable_zipcodes = avaiable_zipcodes + zipcodes + ", ";
-                            }                 
-                            document.getElementById('Shippostcode_validate').style.display = 'block';             
+                            }
+                            document.getElementById('Shippostcode_validate').style.display = 'block';
                             if (avaiable_zipcodes != "") {
-                                document.getElementById('Shippostcode_validate').innerHTML = "Please pick listed your zipcode.<br>" + avaiable_zipcodes +" <span> <small style='color:gray;'>your zipcode not listed then please contact salesperson.</small></span>";                            
+                                document.getElementById('Shippostcode_validate').innerHTML = "Please pick listed your zipcode.<br>" + avaiable_zipcodes +" <span> <small style='color:gray;'>your zipcode not listed then please contact salesperson.</small></span>";
                             }
 
                         }else if(json_result.info.hasOwnProperty('city_by_state') && json_result.info['city_by_state'].length > 0)
-                        { 
+                        {
                             var elmid_city = "updatezipcode(this.options[this.selectedIndex].value, 'Shipcity')";
                             document.getElementById('Shipcity').value = '';
                             var avaiable_city, optionlist = '';
@@ -1102,53 +1104,53 @@
                             var citylist = json_result.info['city_by_state'][0];
                             for (var key in citylist)
                             {
-                                var value = citylist[key];  
+                                var value = citylist[key];
                                 optionlist  = optionlist + '<option value="'+value+'">'+value+'</option>';
-                            }                                         
+                            }
                             if (optionlist != "") {
                                 document.getElementById('Shipcity_validate').style.display ='block';
-                                document.getElementById('Shipcity').style.display ='none';      
+                                document.getElementById('Shipcity').style.display ='none';
                                 document.getElementById('Shipcity-valid').style.display = 'none';
-                                document.getElementById('Shipcity_validate').innerHTML = optionselect + optionlist + "</select><div class=\"input-validation\"></div>";                           
+                                document.getElementById('Shipcity_validate').innerHTML = optionselect + optionlist + "</select><div class=\"input-validation\"></div>";
                                 $('#Shipcity_validate_select').attr( 'onchange', elmid_city );
                             }else{
-                                document.getElementById('Shipcity').style.display = 'block';  
+                                document.getElementById('Shipcity').style.display = 'block';
                                 document.getElementById('Shipcity-valid').style.display = 'block';
-                            } 
-                        }                                               
-                    } else 
-                    {   
-                        document.getElementById('Shippostcode_validate').innerHTML = ''; 
+                            }
+                        }
+                    } else
+                    {
+                        document.getElementById('Shippostcode_validate').innerHTML = '';
                         if (json_result.info["0"]) {
                             json_result.info[0] = json_result.info["0"];
-                        } 
-                        tax_class = parseFloat(json_result.info[0]['total_sales_tax']); 
-                        console.log("tax_class:" + tax_class);  
+                        }
+                        tax_class = parseFloat(json_result.info[0]['total_sales_tax']);
+                        console.log("tax_class:" + tax_class);
                         // console.log("tax_class_status:");
                         document.getElementById('taxclass').value = tax_class;
-                        caltotal();                       
+                        caltotal();
                     }
                 }
-            });            
+            });
         }else{
             console.log("required data not avaiable");
         }
     }
     fetchavatax('Shippostcode');
 
-    function updatezipcode(elmvalue, elmid){ 
+    function updatezipcode(elmvalue, elmid){
         document.getElementById(elmid).value = elmvalue.trim();
         document.getElementById(elmid).style.display = "block";
         if (document.getElementById(elmid+"-valid")) {
-            document.getElementById(elmid+"-valid").style.display = "block"; 
-        }        
+            document.getElementById(elmid+"-valid").style.display = "block";
+        }
         var shivalid = document.getElementById(elmid+'_validate');
         shivalid.innerHTML = '';
-        shivalid.style.display = "none";        
+        shivalid.style.display = "none";
         fetchavatax ('Shippostcode');
     }
-    
-  
+
+
     var autocomplete = {};
     var autocompletesWraps = ['billing', 'shipping'];
     var billing_form = {
