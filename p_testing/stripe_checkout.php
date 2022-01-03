@@ -168,6 +168,7 @@ $checkauth = 0;
           $Shippostcode  = $_POST['Spostcode'];
           $Shipcountry   = $_POST['Scountry'];
           $Shipnotes   = $_POST['S_notes'];
+          $tax_exempt = $_POST['tax_exempt'];
 
           //quote
     	  $quotecost = $_POST['quotecost'];
@@ -384,6 +385,7 @@ $checkauth = 0;
             $creator_obj["Generate_Payment_Link_Id_String"] =  $payrecdid;
             $creator_obj["Ship_Zipcode"] =  $Shippostcode;
             $creator_obj["Ship_Country"] =  $Shipcountry;
+            $creator_obj["Tax_Exempted"] =  $tax_exempt;
             if($Shipnotes != '')
             {
                 $creator_obj["Ship_Notes"] =  $Shipnotes;
@@ -446,6 +448,7 @@ $checkauth = 0;
 			error_log("checkout page: create quote address response-error ".$UpdateQuoteResponse."\n\n", 3, "logs/stripe/stripe-log".date("d-m-Y").".log");
 		}
 		else {
+
 			error_log("checkout page: create quote address response-success ".$UpdateQuoteResponse."\n\n", 3, "logs/stripe/stripe-log".date("d-m-Y").".log");
 		}
 

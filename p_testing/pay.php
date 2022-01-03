@@ -68,7 +68,7 @@ function generatetoken()
 $zoho_auth = json_decode(generatetoken(), true);
 function getcreatordata($creatorurl)
 {
-  $zoho_auth = json_decode(generatetoken(), true);
+  $zoho_auth = json_decode(generatetoken(), true); 
   $json = curl($creatorurl, "GET", "", $zoho_auth['creator']);
   return $json;
 }
@@ -79,7 +79,7 @@ $paymentformrecordid = null;
 if ($quotenumber != "") {
   $customquoteurl = $creatorbaseurl . "report/All_Custom_Quote_Payments?Quoteno=" . urlencode($quotenumber) . "&raw=true&Is_Active=true";
   $json = getcreatordata($customquoteurl);
-  error_log($start . "\n\n pay.php - All_Custom_Quote_Payments res: " . json_encode($json), 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
+  error_log($start . "\n\n pay.php - All_Custom_Quote_Payments res: " . json_encode($json), 3, "logs/pay/pay-log" . date("d-m-Y") . ".log"); 
   if ($json['code'] == 3000) {
     $finalquote = $json['data'][0];
 
@@ -89,7 +89,7 @@ if ($quotenumber != "") {
     //     if ($value1['Transaction_Status'] == 'succeeded' ) {
     //       $finalquote = $value1;
     //     }
-    //   }
+    //   }      
     // }
 
     $storename = $finalquote['Stores']['display_value'];
@@ -99,7 +99,7 @@ if ($quotenumber != "") {
   } else {
     $Allpaymentlinkurl = $creatorbaseurl . "report/All_Payment_Links?Quoteno=" . urlencode($quotenumber) . "&raw=true";
     $json = getcreatordata($Allpaymentlinkurl);
-    error_log($start . "\n\n pay.php - All_Payment_Links res: " . json_encode($json), 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
+    error_log($start . "\n\n pay.php - All_Payment_Links res: " . json_encode($json), 3, "logs/pay/pay-log" . date("d-m-Y") . ".log"); 
     if ($json['code'] == 3000) {
       $finalquote = $json['data'][0];
       $storename = $finalquote['Stores']['display_value'];
@@ -397,10 +397,10 @@ if ($finalquote != "") {
                           </div>
                           <div class="form-element">
                             <label>Town/City <span class="base-color">*</span></label>
-                            <input type="text" tabindex="9" id="Shipcity" name="Shipcity" class="input-field locality" onchange="fetchavatax('Shippostcode')" placeholder="Enter town/city..." value="<?php echo $Shipcity; ?>" required />
+                            <input type="text" tabindex="9" id="Shipcity" name="Shipcity" class="input-field locality" onchange="fetchavatax('Shippostcode')" placeholder="Enter town/city..." value="<?php echo $Shipcity; ?>" required />                                                        
                             <div class="input-validation" id="Shipcity-valid"></div>
                             <div id="Shipcity_validate"> </div>
-                            <!-- <select tabindex="8" id="Shipcity_validate" class="input-field" placeholder="Enter state/province..."  onchange="updatezipcode(this.options[this.selectedIndex].value, 'Shipcity')" style="display:none">
+                            <!-- <select tabindex="8" id="Shipcity_validate" class="input-field" placeholder="Enter state/province..."  onchange="updatezipcode(this.options[this.selectedIndex].value, 'Shipcity')" style="display:none">                         
                             </select> -->
                             <!-- <br><div id="Shipcity_validate" style="color:red;"> </div> -->
                           </div>
@@ -501,7 +501,7 @@ if ($finalquote != "") {
                           <div class="form-element">
                             <label>ZipCode <span class="base-color">*</span></label>
                             <input type="text" tabindex="24" id="postcode" name="postcode" class="input-field postal_code" placeholder="Zipcode..." value="<?php echo $Billpostcode; ?>" required />
-                            <div class="input-validation"></div>
+                            <div class="input-validation"></div>                            
                           </div>
 
                         </div>
@@ -783,7 +783,7 @@ if ($finalquote != "") {
   if ($not_found == false) {
     echo error();
   }
-
+  
 }
 //Not Authorized Access Message
 function error()

@@ -4,9 +4,9 @@ $today_Date = date("Y-m-d h:i:sa");
 $start = "\n\n Started Execution @ $today_Date ";
 
 ob_start();
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 if (isset($_GET['h'])) {
   $quotenumberhash = $_GET['h'];
   $quotenumber = base64_decode($quotenumberhash);
@@ -33,6 +33,7 @@ function curl_get_contents($url)
   curl_close($ch);
   return $data;
 }
+
 function curl($url, $method, $body, $header)
 {
   $curl = curl_init();
@@ -66,48 +67,37 @@ function generatetoken()
 }
 
 $zoho_auth = json_decode(generatetoken(), true);
+
 function getcreatordata($creatorurl)
 {
-  $zoho_auth = json_decode(generatetoken(), true);
-  $json = curl($creatorurl, "GET", "", $zoho_auth['creator']);
+  $zoho_auth = json_decode(generatetoken(), true);  
+  $json = curl($creatorurl, "GET",'', $zoho_auth['creator']);
   return $json;
 }
 
-$not_found = false;
 $creatorbaseurl = 'https://creator.zoho.com/api/v2/zoho_zoho1502/quotes/';
 $paymentformrecordid = null;
 if ($quotenumber != "") {
-  $customquoteurl = $creatorbaseurl . "report/All_Custom_Quote_Payments?Quoteno=" . urlencode($quotenumber) . "&raw=true&Is_Active=true";
-  $json = getcreatordata($customquoteurl);
-  error_log($start . "\n\n pay.php - All_Custom_Quote_Payments res: " . json_encode($json), 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
+  $customquoteurl = $creatorbaseurl . "report/All_Custom_Quote_Payments?Quoteno=" .$quotenumber . "&raw=true&Is_Active=true";
+  $json = getcreatordata($customquoteurl); 
   if ($json['code'] == 3000) {
-    $finalquote = $json['data'][0];
-
-    /** assign payment processed record object as master by T on 07DEC21 */
-    // foreach ($json['data'] as $key => $value) {
-    //   foreach ($value as $key1 => $value1) {
-    //     if ($value1['Transaction_Status'] == 'succeeded' ) {
-    //       $finalquote = $value1;
-    //     }
-    //   }
-    // }
-
+    $finalquote = $json[0];
     $storename = $finalquote['Stores']['display_value'];
     if (isset($finalquote['Generate_Payment_Link_Id_String'])) {
-      $paymentformrecordid =  $finalquote['Generate_Payment_Link_Id_String'];
+      $paymentformrecordid = $finalquote['Generate_Payment_Link_Id_String'];
     }
   } else {
-    $Allpaymentlinkurl = $creatorbaseurl . "report/All_Payment_Links?Quoteno=" . urlencode($quotenumber) . "&raw=true";
+    $Allpaymentlinkurl = $creatorbaseurl . "report/All_Payment_Links?Quoteno=" .$quotenumber. "&raw=true";
+    // $Allpaymentlinkurl = "https://creator.zoho.com/api/v2/zoho_zoho1502/quotes/report/All_Payment_Links?Quoteno=TESTBYT2311&raw=true";
     $json = getcreatordata($Allpaymentlinkurl);
-    error_log($start . "\n\n pay.php - All_Payment_Links res: " . json_encode($json), 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
+    echo "<br>".$Allpaymentlinkurl.json_encode($json);     
     if ($json['code'] == 3000) {
       $finalquote = $json['data'][0];
       $storename = $finalquote['Stores']['display_value'];
       $sales_person = $finalquote['Employee_Email'];
       $paymentformrecordid = $finalquote['ID'];
     } else {
-      notfound();
-      $not_found = true;
+      error();
     }
   }
   error_log($start . "\n\n pay.php - quotenumber is not null " . $quotenumber . "------------", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
@@ -130,12 +120,11 @@ include 'sendnotification.php';
 
 $province = file_get_contents("Province.json");
 if ($finalquote != "") {
-  error_log($start . "\n\n pay.php - quote obj:" . json_encode($finalquote) . "------------\n", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
+  error_log($start . "\n\n pay.php - quote is not null " . json_encode($finalquote) . "------------\n", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
   /* function templating the GET requests sent through this generator */
-  // if ($finalquote['Payment_Transaction_No'] != "" && $finalquote['Transaction_Status'] == "submitted_for_settlement" || $finalquote['Transaction_Status'] == "settled" || $finalquote['Transaction_Status'] == "settling" || $finalquote['Transaction_Status'] == "succeeded") {
-    if ($finalquote['Payment_Transaction_No'] != "" && ($finalquote['Transaction_Status'] == "settled" || $finalquote['Transaction_Status'] == "settling" || $finalquote['Transaction_Status'] == "succeeded" )) {
+  if ($finalquote['Payment_Transaction_No'] != "" && $finalquote['Transaction_Status'] == "submitted_for_settlement" || $finalquote['Transaction_Status'] == "settled" || $finalquote['Transaction_Status'] == "settling" || $finalquote['Transaction_Status'] == "succeeded") {
     error_log($start . "\n\n pay.php - paymenttransacNo & Transaction_Status is not null ------------\n", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
-  ?>
+?>
     <html lang="en">
 
     <head>
@@ -348,7 +337,7 @@ if ($finalquote != "") {
       }
     </style>
 
-    <body>
+    <body onload="initialize()">
       <?php require_once("../includes/header.php"); ?>
       <div class="support-bar-two bg-white home-6" style="padding-top: 0px;padding-bottom: 0px;">
         <div class="container">
@@ -397,10 +386,10 @@ if ($finalquote != "") {
                           </div>
                           <div class="form-element">
                             <label>Town/City <span class="base-color">*</span></label>
-                            <input type="text" tabindex="9" id="Shipcity" name="Shipcity" class="input-field locality" onchange="fetchavatax('Shippostcode')" placeholder="Enter town/city..." value="<?php echo $Shipcity; ?>" required />
+                            <input type="text" tabindex="9" id="Shipcity" name="Shipcity" class="input-field locality" onchange="fetchavatax('Shippostcode')" placeholder="Enter town/city..." value="<?php echo $Shipcity; ?>" required />                                                        
                             <div class="input-validation" id="Shipcity-valid"></div>
                             <div id="Shipcity_validate"> </div>
-                            <!-- <select tabindex="8" id="Shipcity_validate" class="input-field" placeholder="Enter state/province..."  onchange="updatezipcode(this.options[this.selectedIndex].value, 'Shipcity')" style="display:none">
+                            <!-- <select tabindex="8" id="Shipcity_validate" class="input-field" placeholder="Enter state/province..."  onchange="updatezipcode(this.options[this.selectedIndex].value, 'Shipcity')" style="display:none">                         
                             </select> -->
                             <!-- <br><div id="Shipcity_validate" style="color:red;"> </div> -->
                           </div>
@@ -501,7 +490,7 @@ if ($finalquote != "") {
                           <div class="form-element">
                             <label>ZipCode <span class="base-color">*</span></label>
                             <input type="text" tabindex="24" id="postcode" name="postcode" class="input-field postal_code" placeholder="Zipcode..." value="<?php echo $Billpostcode; ?>" required />
-                            <div class="input-validation"></div>
+                            <div class="input-validation"></div>                            
                           </div>
 
                         </div>
@@ -774,16 +763,10 @@ if ($finalquote != "") {
 
     <?php
     require('script.php');
-    ?>
-    <script>initialize();</script>
-    <?php
   }
 } else {
   error_log($start . "\n\n error ------------------\n\n", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
-  if ($not_found == false) {
-    echo error();
-  }
-
+  echo error();
 }
 //Not Authorized Access Message
 function error()
@@ -816,41 +799,5 @@ function error()
     </html>
   <?php
 }
-
-
-/*** Quote record not found  handled by T n 07DEC21*/
-
-function notfound()
-{
-    ?>
-    <html lang="en">
-
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-      <title>Quote Not Found</title>
-      <style>
-        h1 {
-          margin: 2em 0;
-        }
-      </style>
-    </head>
-
-    <body>
-      <div class="container">
-        <h1 class="text-center">Requested Quote not Found</h1>
-        <div class="jumbotron" align="center" style="border-bottom:5px inset #ffb7b7 !important">
-          We are sorry for the inconvenience, <br />
-          Please check with salesperson for further details...
-        </div>
-      </div>
-    </body>
-
-    </html>
-  <?php
-}
-
-
 ob_end_flush();
   ?>
