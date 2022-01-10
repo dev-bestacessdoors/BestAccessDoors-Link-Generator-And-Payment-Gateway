@@ -169,6 +169,7 @@ $checkauth = 0;
           $Shipcountry   = $_POST['Scountry'];
           $Shipnotes   = $_POST['S_notes'];
 
+					$taxexempted = $_POST['tax_exempt'];
           //quote
     	  $quotecost = $_POST['quotecost'];
           $Additional_Shipping_Charge = $_POST['addtionalshipping'];
@@ -374,6 +375,7 @@ $checkauth = 0;
             $creator_obj["Ship_Phone_Number"] =  $Shipphonenumber;
             $creator_obj["Ship_Company"] =  $Shipcompanyname;
             $creator_obj["Ship_Street1"] =  $Shipaddress1;
+						$creator_obj["Tax_Exempted"] =  $taxexempted;
             if($Shipaddress2 != '')
             {
                 $creator_obj["Ship_Street2"] =  $Shipaddress2;
