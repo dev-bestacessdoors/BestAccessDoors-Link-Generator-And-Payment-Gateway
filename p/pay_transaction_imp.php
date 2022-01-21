@@ -135,7 +135,7 @@ setcookie('flag',1,time()+3600);
 
 ?>
     <title> <?php echo preg_replace("/[^a-zA-Z]/", " ", $storename)." - Payment Success" ?></title>
-    <div style="width: 100%;" align="center">
+    <div style="width: 70%;" align="center">
         <img src="<?php echo $logourl; ?>" alt="Logo" style="width: 100%;">
     </div>
     <div class="wrapper">
