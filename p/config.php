@@ -39,5 +39,30 @@ chdir(dirname(__FILE__));
 
     set_error_handler("error_handler");
 
+    if ($storename == "Access_Doors_Canada") {
+        $logourl = 'logo/adc.jpg';
+        }elseif ($storename == "Acudor_Access_Panels") {
+        $logourl = 'logo/aap.jpg';
+        }elseif ($storename == "Access_Doors_And_Panels") {
+        $logourl = 'logo/adap.jpg';
+        }elseif ($storename == "Best_Access_Doors") {
+        $logourl = 'logo/bad.jpg';
+        }elseif ($storename == "Best_Access_Doors_Canada") {
+        $logourl = 'logo/badc.jpg';
+        }elseif ($storename == "California_Access_Doors") {
+        $logourl = 'logo/cad.jpg';
+        }elseif ($storename == "Max_Supply") {
+        $logourl = 'logo/max.jpg';
+        }elseif ($storename == "Public_Furniture") {
+        $logourl = 'logo/pub.jpg';
+        }elseif ($storename == "Best_Roof_Hatches") {
+        $logourl = 'logo/brh.jpg';
+        }
+        else {
+        $logourl = '<h5> Invalid Store Name. Please Contact Sales Person . . . </h5>';
+        }
+      
+      $baseUrl = stripslashes(dirname($_SERVER['SCRIPT_NAME']));
+      $baseUrl = $baseUrl == '/' ? $baseUrl : $baseUrl . '/';
 
 ?>
