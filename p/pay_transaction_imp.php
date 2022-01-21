@@ -211,7 +211,7 @@ setcookie('flag',1,time()+3600);
 
         <div class="container" id="transdetail" style="display:none">
             <h1> Transaction Details</h1><br>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <div class="alert alert-warning fade show" role="alert" style="margin-left: 10%;width: ;">
                 <div class="row">
                     Thanks for your business! We have received your payment and your order is now being processed. You
                     will recieve an email receipt shortly.
