@@ -4,7 +4,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$storename =$_GET['s'];
+$storename = $_GET['s'];
+
 require_once('config.php');
 $flag = 0;
 if(isset($_COOKIE['flag'])) {
@@ -146,16 +147,13 @@ setcookie('flag',1,time()+3600);
         }
 
         h1 {
-            font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
-            font-weight: 600 !important;
+             font-weight: 600 !important;
         }
 
         h2 {
-            font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
-            margin: 0 !important;
+             margin: 0 !important;
         }
-
-        td {
+         td {
             font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
         }
 
