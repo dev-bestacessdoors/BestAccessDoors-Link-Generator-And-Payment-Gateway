@@ -14,14 +14,10 @@ $today_Date = date("Y-m-d h:i:sa");
 $start = "\n\n Started Execution @ $today_Date ";
 error_log($start."\n\n".json_encode($_POST), 3, "logs/stripe/stripe-log".date("d-m-Y").".log");
 
-		$storename = $_GET['s'];
-		if(isset($_COOKIE['storename'])) {
-				$storename= $_COOKIE['storename'];
+$storename = $_GET['s'];
+if(isset($_COOKIE['storename'])) {
+    $storename= $_COOKIE['storename'];
  }
-
-
-$creatorKey="8e9640c1f4b7e8e3443fd95d7c16b7e6";
-
 
 function curl($url, $method, $body, $header)
 {
@@ -95,26 +91,13 @@ function curl_get_contents($url)
 	curl_close($ch);
 	return $data;
 }
-
-// $StoreData = curl_get_contents("https://creator.zoho.com/api/json/quotes/view/All_Stores?authtoken=".$creatorKey."&scope=creatorapi&zc_ownername=zoho_zoho1502&raw=true&Store_Name=".$storename);
-
-
-  $Storeurl = "https://creator.zoho.com/api/v2/zoho_zoho1502/quotes/report/All_Stores?Store_Name=".$storename."&raw=true";
-
-//   error_log($store_url."\n\n".$Storeurl, 3, "logs/stripe/stripe-log".date("d-m-Y").".log");
-  $Storedataresponse = getcreatordata($Storeurl);
-
-/* Sanitizing the Store details received from zoho creator */
-// $decodedStoreText = html_entity_decode($StoreData);
-// $myStoreArray = json_decode($decodedStoreText, true);
-// $Storedataresponse = $myStoreArray['Stores'];
+ 
+$Storeurl = "https://creator.zoho.com/api/v2/zoho_zoho1502/quotes/report/All_Stores?Store_Name=".$storename."&raw=true"; 
+$Storedataresponse = getcreatordata($Storeurl); 
 foreach($Storedataresponse as $item) {
   $Storedetails = $item;
 }
-
-// error_log($store_response."\n\n".json_encode($Storedetails), 3, "logs/stripe/stripe-log".date("d-m-Y").".log");
-
-//data formations
+ 
 $StoreWebsite=$Storedetails['WebsiteText'];
 $TCLink=$Storedetails['T_C_Link'];
 $store_id = $Storedetails['ID'];
@@ -298,9 +281,6 @@ $checkauth = 0;
                       error_log("\nCustomer creation Else  Catch: ".$message, 3, "logs/stripe/stripe-log".date("d-m-Y").".log");
                   }
                  }
-
-
-
         if($stripe_customerid != ""){
 		// create charge
 		try {
@@ -417,12 +397,8 @@ $checkauth = 0;
             $creator_obj["Decline_Reason"] = $message ?? '';
             $reqbody['data'] = $creator_obj;
 
-
-
         error_log("checkout page: create quote request".json_encode($reqbody)."\n\n", 3, "logs/stripe/stripe-log".date("d-m-Y").".log");
-
-// 		$CustAddressString ="------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"authtoken\"\r\n\r\n".$creatorKey."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"scope\"\r\n\r\ncreatorapi\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Quoteno\r\n\r\n".$quote."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=First_Name\r\n\r\n".$customer_firstname."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Last_Name\r\n\r\n".$customer_lastname."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Email\r\n\r\n".$customer_email."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Phone_Number\r\n\r\n".$customer_phonenumber."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Company\r\n\r\n".$companyname."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Street1\r\n\r\n".$Billaddress1."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data;  name=Street2\r\n\r\n".$Billaddress2."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Town_City\r\n\r\n".$Billcity."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data;  name=State_Province\r\n\r\n".$Billstate."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=ZipCode\r\n\r\n".$Billpostcode."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Country\r\n\r\n".$Billcountry."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Ship_Firstname\r\n\r\n".$Shipfirstname."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Shipping_Charge\r\n\r\n".$shippingcost."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Quote_Amount\r\n\r\n".$quotecost."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Total_Amount\r\n\r\n".$amount."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data;  name=Stores\r\n\r\n".$storename."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Tax_Class\r\n\r\n".$taxclass ."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Tax_CAD\r\n\r\n".$taxcad ."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data;   name=Currency\r\n\r\n".$currency ."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data;  name=Ship_Lastname\r\n\r\n".$Shiplastname."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data;  name=Ship_Email\r\n\r\n".$Shipemail."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data;  name=Ship_Phone_Number\r\n\r\n".$Shipphonenumber."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data;  name=Ship_Company\r\n\r\n".$Shipcompanyname."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Ship_Street1\r\n\r\n".$Shipaddress1."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Ship_Street2\r\n\r\n".$Shipaddress2."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Ship_Town_City\r\n\r\n".$Shipcity."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Ship_State_Province\r\n\r\n".$Shipstate."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Additional_Shipping_Charge\r\n\r\n".$Additional_Shipping_Charge."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Generate_Payment_Link_Id_String\r\n\r\n".$payrecdid."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data;name=Ship_Zipcode\r\n\r\n".$Shippostcode."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Ship_Country\r\n\r\n".$Shipcountry."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Ship_Notes\r\n\r\n".$Shipnotes."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Payment_Transaction_No\r\n\r\n".$chargeid."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Amount_Paid\r\n\r\n".$amount."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Payment_Method\r\n\r\n".$Card_Type."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Card_Last_4_Digit\r\n\r\n".$last4."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Payment_Gateway\r\n\r\n".$paymentgateway."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=Decline_Reason\r\n\r\n".$message."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition:form-data; name=Transaction_Status\r\n\r\n".$trans_status."\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--";
-		$updatecustAddressdata = curl_init();
+      $updatecustAddressdata = curl_init();
 
 	    array_push($zoho_auth['creator'], "Content-Type:application/json");
 
@@ -455,7 +431,7 @@ $checkauth = 0;
 	}
 
 		if (isset($charge['id'])) {
-			echo json_encode(array("info"=>$charge,"error"=>false,"message"=>$charge['status'],"redirect"=>$baseUrl."pay_transaction_imp.php?id=".$charge['id']."&site=".$StoreWebsite."&quote=".$quote."&s=".$storename."&scope=stripe"."&tc=".$TCLink));
+			echo json_encode(array("info"=>$charge,"error"=>false,"message"=>$charge['status'],"redirect"=>$baseUrl."pay_transaction_imp.php?id=".$charge['id']."&site=".$StoreWebsite."&quote=".urlencode($quote)."&s=".$storename."&scope=stripe"."&tc=".$TCLink));
 		}else{
 			$errorString .= 'Error: Your transaction has not been processed with the error message of ' . $message;
 			$_SESSION["errors"] = $errorString;
