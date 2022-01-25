@@ -1067,8 +1067,11 @@
         var shipstate = document.getElementById('Shipstate').value;
         var shipcity = document.getElementById('Shipcity').value;
         var avaurl = 'https://door-pay.com/p/AvalaraCORSWorkaround.php?zipcode=' + zipcode + '&Shipcity=' + shipcity +'&shipstate='+ shipstate  ;
-        console.log("zipcode:" + shipcountry + "::"+zipcode  +  "::"+shipstate + "::"+shipcity + "::"+tax_exempt);
-        if (shipcountry != null && shipcountry == "United States" && zipcode != '' && shipcity != '' && shipstate != '' && tax_exempt == false) {
+        console.log("shipcountry:" + shipcountry + "::"+zipcode  +  "::"+ shipcity+ "::"+ shipstate + "::"+tax_exempt);
+        if (shipcountry) {
+            console.log("shipcountry avatax" )
+        }
+        if (shipcountry && shipcountry == "United States" && zipcode != '' && shipcity != '' && shipstate != '' && tax_exempt == false) {
             console.log("search avatax" );
             $.ajax({
                 url: avaurl,
