@@ -90,7 +90,7 @@
     }
     var tax_class = "<?php echo $finalquote['Tax_Class'] ?: 0 ?>";
     var tax_exempt = "<?php echo $finalquote['Customer_is_Tax_Exempted'] ?>";
-    document.getElementById("tax_exmpt").value = tax_exempt;
+    document.getElementById("tax_exempt").value = tax_exempt;
     
     var province = <?php echo $province ?>;
     var country = <?php echo "\"" . $Shipcountry . "\""; ?>;
