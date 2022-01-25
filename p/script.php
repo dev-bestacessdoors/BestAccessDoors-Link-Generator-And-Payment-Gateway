@@ -1068,12 +1068,12 @@
         var shipcountry = document.getElementById('Shipcountry').value;
         var shipstate = document.getElementById('Shipstate').value;
         var shipcity = document.getElementById('Shipcity').value;
-        var tax_exempt = document.getElementById('tax_exempt').value;
-        let tax_exempt = "<?php echo $finalquote['Customer_is_Tax_Exempted'] ?>";
+        // var tax_exempt = document.getElementById('tax_exempt').value;
+        let tax_exemption = "<?php echo $finalquote['Customer_is_Tax_Exempted'] ?>";
         var avaurl = 'https://door-pay.com/p/AvalaraCORSWorkaround.php?zipcode=' + zipcode + '&Shipcity=' + shipcity +'&shipstate='+ shipstate  ;
-        console.log("shipcountry:" + shipcountry + "::"+zipcode+  "::"+ shipcity+ "::"+ shipstate + "::"+tax_exempt);
+        console.log("shipcountry:" + shipcountry + "::"+zipcode+  "::"+ shipcity+ "::"+ shipstate + "::"+tax_exemption);
 
-        if (shipcountry && shipcountry == "United States" && zipcode != '' && shipcity != '' && shipstate != '' && tax_exempt == false) {
+        if (shipcountry && shipcountry == "United States" && zipcode != '' && shipcity != '' && shipstate != '' && tax_exemption == false) {
             console.log("search avatax" );
             $.ajax({
                 url: avaurl,
