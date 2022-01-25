@@ -817,79 +817,79 @@
 
     $('.submit-btn').css('text-transform', '');
     $("#hideamount").hide();
-    var form = document.querySelector('#payment-form');
-    //get gateway token
-    var client_token = "<?php echo ($gateway->ClientToken()->generate()); ?>";
-    braintree.dropin.create({
-        authorization: client_token,
-        selector: '#bt-dropin',
-        paypal: {
-            flow: 'vault'
-        }
-    }, function(createErr, instance) {
-        if (createErr) {
-            // console.log('Create Error', createErr);
-            return;
-        }
+    // var form = document.querySelector('#payment-form');
+    //get gateway token commented by T 0n 25-01-2022 // due to unused live functions
+    // var client_token = "<?php echo ($gateway->ClientToken()->generate()); ?>";
+    // braintree.dropin.create({
+    //     authorization: client_token,
+    //     selector: '#bt-dropin',
+    //     paypal: {
+    //         flow: 'vault'
+    //     }
+    // }, function(createErr, instance) {
+    //     if (createErr) {
+    //         // console.log('Create Error', createErr);
+    //         return;
+    //     }
 
-        form.addEventListener('submit', function(event) {
-            console.log('add event Listener called ');
+    //     form.addEventListener('submit', function(event) {
+    //         console.log('add event Listener called ');
 
-            event.preventDefault();
-            instance.requestPaymentMethod(function(err, payload) {
-                if (err) {
-                    console.log('Request Payment Method Error', err);
-                    return;
-                }
-                document.getElementById('loading').style.display = 'block';
-                $("#btnverzenden").hide();
-                $("#btnverzenden2").show();
-                $("#btnverzenden3").show();
-                $(".braintree-large-button.braintree-toggle").hide()
-                document.getElementById('agree').disabled = true;
+    //         event.preventDefault();
+    //         instance.requestPaymentMethod(function(err, payload) {
+    //             if (err) {
+    //                 console.log('Request Payment Method Error', err);
+    //                 return;
+    //             }
+    //             document.getElementById('loading').style.display = 'block';
+    //             $("#btnverzenden").hide();
+    //             $("#btnverzenden2").show();
+    //             $("#btnverzenden3").show();
+    //             $(".braintree-large-button.braintree-toggle").hide()
+    //             document.getElementById('agree').disabled = true;
 
-                bodyobj = getformdata('braintree');
-                var form = document.getElementById('payment-form');
-                document.querySelector('#nonce').value = payload.nonce;
-                var nonce = payload.nonce;
-                bodyobj['payment_method_nonce'] = nonce;
-                // Add the nonce to the form and submit
-                // {    quote:quote, amount:amount, quotecost:quotecost, Tax_Class:Tax_Class, Tax_CAD:Tax_CAD, shippingcost:shippingcost, addtionalshipping:addtionalshipping, customer_firstname: C_firstname, customer_lastname: C_lastname, customer_email: C_email, customer_phonenumber: C_phonenumber, store: "<?php echo $storename; ?>",currency: "<?php echo $currency; ?>",
-                //       Bcompanyname: C_company, Baddress1: B_address1, Baddress2: B_address2, Bcity: B_city, Bstate: B_state, Bpostcode:B_postcode,Bcountry: B_country, Ship_firstname: S_firstname, Ship_lastname: S_lastname, Ship_email: S_email, Ship_phonenumber: S_phonenumber,S_company: S_company, Saddress1: S_address1, Saddress2: S_address2, Scity: S_city, Sstate:S_state , Spostcode: S_postcode,Scountry: S_country,S_notes:S_notes, payment_method_nonce:nonce, payrecdid:payrecdid
-                //     }
-                $.ajax({
-                    url: "pay_checkout.php?s=<?php echo $storename; ?>", //the page containing php script
-                    type: "post", //request type,
-                    dataType: 'json',
-                    data: bodyobj,
-                    success: function(result) {
-                        $('.braintree-method').css('border-color', 'green');
-                        $('.braintree-method__icon').show();
-                        $("#btnverzenden2").hide();
-                        $("#btnverzenden3").hide();
-                        if (result.error == false) {
-                            window.location = result.redirect;
-                            console.log("transaction success");
-                            $(".braintree-large-button.braintree-toggle").hide();
-                            document.getElementById('loading').style.display = 'none';
-                        } else {
-                            document.getElementById('loading').style.display = 'none';
-                            $('.braintree-method').css('border-color', 'red');
-                            $(".braintree-method__icon").hide();
-                            $(".braintree-large-button.braintree-toggle").hide();
-                            console.log("transaction failed");
-                            document.getElementById("modaloverlay").style.display = 'block';
-                            var modal = document.getElementById("myModal");
-                            modal.style.display = "block";
-                            document.getElementById("tranError").innerHTML = result.message;
-                            console.log(result.message);
-                        }
-                    }
-                });
-                // form.submit();
-            });
-        });
-    });
+    //             bodyobj = getformdata('braintree');
+    //             var form = document.getElementById('payment-form');
+    //             document.querySelector('#nonce').value = payload.nonce;
+    //             var nonce = payload.nonce;
+    //             bodyobj['payment_method_nonce'] = nonce;
+    //             // Add the nonce to the form and submit
+    //             // {    quote:quote, amount:amount, quotecost:quotecost, Tax_Class:Tax_Class, Tax_CAD:Tax_CAD, shippingcost:shippingcost, addtionalshipping:addtionalshipping, customer_firstname: C_firstname, customer_lastname: C_lastname, customer_email: C_email, customer_phonenumber: C_phonenumber, store: "<?php echo $storename; ?>",currency: "<?php echo $currency; ?>",
+    //             //       Bcompanyname: C_company, Baddress1: B_address1, Baddress2: B_address2, Bcity: B_city, Bstate: B_state, Bpostcode:B_postcode,Bcountry: B_country, Ship_firstname: S_firstname, Ship_lastname: S_lastname, Ship_email: S_email, Ship_phonenumber: S_phonenumber,S_company: S_company, Saddress1: S_address1, Saddress2: S_address2, Scity: S_city, Sstate:S_state , Spostcode: S_postcode,Scountry: S_country,S_notes:S_notes, payment_method_nonce:nonce, payrecdid:payrecdid
+    //             //     }
+    //             $.ajax({
+    //                 url: "pay_checkout.php?s=<?php echo $storename; ?>", //the page containing php script
+    //                 type: "post", //request type,
+    //                 dataType: 'json',
+    //                 data: bodyobj,
+    //                 success: function(result) {
+    //                     $('.braintree-method').css('border-color', 'green');
+    //                     $('.braintree-method__icon').show();
+    //                     $("#btnverzenden2").hide();
+    //                     $("#btnverzenden3").hide();
+    //                     if (result.error == false) {
+    //                         window.location = result.redirect;
+    //                         console.log("transaction success");
+    //                         $(".braintree-large-button.braintree-toggle").hide();
+    //                         document.getElementById('loading').style.display = 'none';
+    //                     } else {
+    //                         document.getElementById('loading').style.display = 'none';
+    //                         $('.braintree-method').css('border-color', 'red');
+    //                         $(".braintree-method__icon").hide();
+    //                         $(".braintree-large-button.braintree-toggle").hide();
+    //                         console.log("transaction failed");
+    //                         document.getElementById("modaloverlay").style.display = 'block';
+    //                         var modal = document.getElementById("myModal");
+    //                         modal.style.display = "block";
+    //                         document.getElementById("tranError").innerHTML = result.message;
+    //                         console.log(result.message);
+    //                     }
+    //                 }
+    //             });
+    //             // form.submit();
+    //         });
+    //     });
+    // });
 
     //get id of the selected element
     function get_id(clicked_id) {
