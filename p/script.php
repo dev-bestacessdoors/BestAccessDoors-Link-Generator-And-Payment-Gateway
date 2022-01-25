@@ -1069,7 +1069,7 @@
         var avaurl = 'https://door-pay.com/p/AvalaraCORSWorkaround.php?zipcode=' + zipcode + '&Shipcity=' + shipcity +'&shipstate='+ shipstate  ;
         console.log("shipcountry:" + shipcountry + "::"+zipcode+  "::"+ shipcity+ "::"+ shipstate + "::"+tax_exempt);
 
-        if (tax_exempt == false || tax_exempt = "false") {
+        if (tax_exempt == false || tax_exempt == "false") {
             console.log("succes tax exxception");
             
         }
