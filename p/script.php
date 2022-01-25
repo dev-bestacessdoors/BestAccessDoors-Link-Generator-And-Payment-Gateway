@@ -1,7 +1,7 @@
 <?php ?>
 <!-- jquery -->
 <script src="assets/js/jquery.js"></script>
-<script src="https://js.braintreegateway.com/web/dropin/1.16.0/js/dropin.min.js"></script>
+<!-- <script src="https://js.braintreegateway.com/web/dropin/1.16.0/js/dropin.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <style>
@@ -193,7 +193,7 @@
             }
         });
         var get_tax_class = "";
-        if (getprovinceobj[0]['Total_Tax_Rate'] != "" && tax_exempt == false) {
+        if (getprovinceobj[0]['Total_Tax_Rate'] != "" && (tax_exempt == false || tax_exempt == "false")) {
             get_tax_class = getprovinceobj[0]['Total_Tax_Rate'];
             settaxtclass(get_tax_class);
             caltotal();
@@ -1067,12 +1067,7 @@
         var shipstate = document.getElementById('Shipstate').value;
         var shipcity = document.getElementById('Shipcity').value;  
         var avaurl = 'https://door-pay.com/p/AvalaraCORSWorkaround.php?zipcode=' + zipcode + '&Shipcity=' + shipcity +'&shipstate='+ shipstate  ;
-        console.log("shipcountry:" + shipcountry + "::"+zipcode+  "::"+ shipcity+ "::"+ shipstate + "::"+tax_exempt);
-
-        if (tax_exempt == false || tax_exempt == "false") {
-            console.log("succes tax exxception");
-            
-        }
+        // console.log("shipcountry:" + shipcountry + "::"+zipcode+  "::"+ shipcity+ "::"+ shipstate + "::"+tax_exempt); 
         if (shipcountry && shipcountry == "United States" && zipcode != '' && shipcity != '' && shipstate != '' && (tax_exempt == false || tax_exempt == 'false')) {
             console.log("search avatax" );
             $.ajax({
