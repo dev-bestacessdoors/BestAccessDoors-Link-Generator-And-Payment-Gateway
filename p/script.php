@@ -1065,10 +1065,11 @@
         var zipcode = document.getElementById($eid).value;
         var shipcountry = document.getElementById('Shipcountry').value;
         var shipstate = document.getElementById('Shipstate').value;
-        var Shipcity = document.getElementById('Shipcity').value;
-        var avaurl = 'https://door-pay.com/p/AvalaraCORSWorkaround.php?zipcode=' + zipcode + '&Shipcity=' + Shipcity +'&shipstate='+ shipstate  ;
-        console.log("zipcode:" +shipcountry + zipcode  +  shipstate + Shipcity + tax_exempt);
-        if (shipcountry != null && shipcountry == "United States" && zipcode != '' && Shipcity != '' && shipstate != '' && tax_exempt == false) {
+        var shipcity = document.getElementById('Shipcity').value;
+        var avaurl = 'https://door-pay.com/p/AvalaraCORSWorkaround.php?zipcode=' + zipcode + '&Shipcity=' + shipcity +'&shipstate='+ shipstate  ;
+        console.log("zipcode:" + shipcountry + "::"+zipcode  +  "::"+shipstate + "::"+shipcity + "::"+tax_exempt);
+        if (shipcountry != null && shipcountry == "United States" && zipcode != '' && shipcity != '' && shipstate != '' && tax_exempt == false) {
+            console.log("search avatax" );
             $.ajax({
                 url: avaurl,
                 type: 'GET',
