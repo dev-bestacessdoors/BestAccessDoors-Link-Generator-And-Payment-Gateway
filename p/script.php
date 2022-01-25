@@ -89,9 +89,7 @@
         $(".braintree-large-button.braintree-toggle").hide()
     }
     var tax_class = "<?php echo $finalquote['Tax_Class'] ?: 0 ?>";
-    var tax_exempt = "<?php echo $finalquote['Customer_is_Tax_Exempted'] ?>";
-    document.getElementById("tax_exempt").value = tax_exempt;
-    
+    var tax_exempt = "<?php echo $finalquote['Customer_is_Tax_Exempted'] ?>";     
     var province = <?php echo $province ?>;
     var country = <?php echo "\"" . $Shipcountry . "\""; ?>;
     if (country != "") {
@@ -1067,11 +1065,10 @@
         var zipcode = document.getElementById($eid).value;
         var shipcountry = document.getElementById('Shipcountry').value;
         var shipstate = document.getElementById('Shipstate').value;
-        var shipcity = document.getElementById('Shipcity').value;
-        var tax_exempt = document.getElementById('tax_exempt').value;
+        var shipcity = document.getElementById('Shipcity').value; 
         let tax_exemption = "<?php echo $finalquote['Customer_is_Tax_Exempted'] ?>";
         var avaurl = 'https://door-pay.com/p/AvalaraCORSWorkaround.php?zipcode=' + zipcode + '&Shipcity=' + shipcity +'&shipstate='+ shipstate  ;
-        console.log("shipcountry:" + shipcountry + "::"+zipcode+  "::"+ shipcity+ "::"+ shipstate + "::"+tax_exemption);
+        console.log("shipcountry:" + shipcountry + "::"+zipcode+  "::"+ shipcity+ "::"+ shipstate + "::"+tax_exempt + tax_exemption);
 
         if (shipcountry && shipcountry == "United States" && zipcode != '' && shipcity != '' && shipstate != '' && (tax_exemption == false || tax_exemption == "false")) {
             console.log("search avatax" );
