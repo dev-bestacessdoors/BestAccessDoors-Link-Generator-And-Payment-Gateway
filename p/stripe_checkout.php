@@ -414,7 +414,7 @@ $checkauth = 0;
 	}
 
 		if (isset($charge['id'])) {
-			echo json_encode(array("info"=>$charge,"error"=>false,"message"=>$charge['status'],"redirect"=>$baseUrl."pay_transaction_imp.php?id=".$charge['id']."&site=".$StoreWebsite."&quote=".$quote."&s=".$storename."&scope=stripe"."&tc=".$TCLink));
+			echo json_encode(array("info"=>$charge,"error"=>false,"message"=>$charge['status'],"redirect"=>$baseUrl."pay_transaction_imp.php?id=".$charge['id']."&site=".$StoreWebsite."&quote=".urlencode($quote)."&s=".$storename."&scope=stripe"."&tc=".$TCLink));
 		}else{
 			$errorString .= 'Error: Your transaction has not been processed with the error message of ' . $message;
 			$_SESSION["errors"] = $errorString;

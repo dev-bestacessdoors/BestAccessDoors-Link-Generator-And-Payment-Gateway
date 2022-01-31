@@ -622,8 +622,7 @@ if ($finalquote != "") {
                     <!-- <hr>
                     <h3 style='font-weight: 400;font-family: "Rubik", sans-serif;margin-bottom: -10px;margin-top: -10px;'>Click Payment Option Below</h3>
                     <hr> -->
-                  </div>
-
+                  </div> 
                   <label for="amount" id="hideamount">
                     <span class="input-label">Amount</span>
                     <div class="input-wrapper amount-wrapper">
