@@ -90,7 +90,7 @@ if ($quotenumber != "") {
     $Allpaymentlinkurl = $creatorbaseurl . "report/All_Payment_Links?Quoteno=" . $quotenumber . "&raw=true";
     // $Allpaymentlinkurl = "https://creator.zoho.com/api/v2/zoho_zoho1502/quotes/report/All_Payment_Links?Quoteno=TESTBYT2311&raw=true";
     $json = getcreatordata($Allpaymentlinkurl);
-    echo "<br>" . $Allpaymentlinkurl . json_encode($json);
+    // echo "<br>" . $Allpaymentlinkurl . json_encode($json);
     if ($json['code'] == 3000) {
       $finalquote = $json['data'][0];
       $storename = $finalquote['Stores']['display_value'];
