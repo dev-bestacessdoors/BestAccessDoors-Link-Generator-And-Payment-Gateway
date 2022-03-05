@@ -66,7 +66,7 @@ if($auth === $sha512_Auth_key)
         $mail->AddBCC($BCCaddress);
       }
     // 	$mail->AddBCC('tharmendheran@bizappln.com');
-    $mail->AddBCC('prashanth@bizappln.com');
+    // $mail->AddBCC('prashanth@bizappln.com');
     	$mail->Subject = $mail_data['Subject'];
     	$mail->Body = $mail_data['Message'];
 
