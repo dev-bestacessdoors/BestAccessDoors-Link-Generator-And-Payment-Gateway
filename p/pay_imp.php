@@ -70,16 +70,16 @@ $zoho_auth = json_decode(generatetoken(), true);
 
 function getcreatordata($creatorurl)
 {
-  $zoho_auth = json_decode(generatetoken(), true);  
-  $json = curl($creatorurl, "GET",'', $zoho_auth['creator']);
+  $zoho_auth = json_decode(generatetoken(), true);
+  $json = curl($creatorurl, "GET", '', $zoho_auth['creator']);
   return $json;
 }
 
 $creatorbaseurl = 'https://creator.zoho.com/api/v2/zoho_zoho1502/quotes/';
 $paymentformrecordid = null;
 if ($quotenumber != "") {
-  $customquoteurl = $creatorbaseurl . "report/All_Custom_Quote_Payments?Quoteno=" .$quotenumber . "&raw=true&Is_Active=true";
-  $json = getcreatordata($customquoteurl); 
+  $customquoteurl = $creatorbaseurl . "report/All_Custom_Quote_Payments?Quoteno=" . $quotenumber . "&raw=true&Is_Active=true";
+  $json = getcreatordata($customquoteurl);
   if ($json['code'] == 3000) {
     $finalquote = $json[0];
     $storename = $finalquote['Stores']['display_value'];
@@ -87,10 +87,10 @@ if ($quotenumber != "") {
       $paymentformrecordid = $finalquote['Generate_Payment_Link_Id_String'];
     }
   } else {
-    $Allpaymentlinkurl = $creatorbaseurl . "report/All_Payment_Links?Quoteno=" .$quotenumber. "&raw=true";
+    $Allpaymentlinkurl = $creatorbaseurl . "report/All_Payment_Links?Quoteno=" . $quotenumber . "&raw=true";
     // $Allpaymentlinkurl = "https://creator.zoho.com/api/v2/zoho_zoho1502/quotes/report/All_Payment_Links?Quoteno=TESTBYT2311&raw=true";
     $json = getcreatordata($Allpaymentlinkurl);
-    echo "<br>".$Allpaymentlinkurl.json_encode($json);     
+    // echo "<br>" . $Allpaymentlinkurl . json_encode($json);
     if ($json['code'] == 3000) {
       $finalquote = $json['data'][0];
       $storename = $finalquote['Stores']['display_value'];
@@ -136,7 +136,7 @@ if ($finalquote != "") {
 
     <body>
       <div class="container" align="center">
-        <img src="<?php echo $logourl; ?>" alt="Logo" style="width: 100%;">
+        <img src="<?php echo $logourl_new; ?>" alt="Logo" style="width: 100%;">
       </div><br>
       <div class="container" style="margin-top: 0%;">
         <!-- <div class="container" style="margin-top: -16%;"><br>
@@ -342,7 +342,7 @@ if ($finalquote != "") {
       <div class="support-bar-two bg-white home-6" style="padding-top: 0px;padding-bottom: 0px;">
         <div class="container">
           <div class="row">
-            <img src="<?php echo $logourl; ?>" alt="Logo" style="width: 100%;">
+            <img src="<?php echo $logourl_new; ?>" alt="Logo" style="width: 100%;">
           </div>
         </div>
       </div>
@@ -386,7 +386,7 @@ if ($finalquote != "") {
                           </div>
                           <div class="form-element">
                             <label>Town/City <span class="base-color">*</span></label>
-                            <input type="text" tabindex="9" id="Shipcity" name="Shipcity" class="input-field locality" onchange="fetchavatax('Shippostcode')" placeholder="Enter town/city..." value="<?php echo $Shipcity; ?>" required />                                                        
+                            <input type="text" tabindex="9" id="Shipcity" name="Shipcity" class="input-field locality" onchange="fetchavatax('Shippostcode')" placeholder="Enter town/city..." value="<?php echo $Shipcity; ?>" required />
                             <div class="input-validation" id="Shipcity-valid"></div>
                             <div id="Shipcity_validate"> </div>
                             <!-- <select tabindex="8" id="Shipcity_validate" class="input-field" placeholder="Enter state/province..."  onchange="updatezipcode(this.options[this.selectedIndex].value, 'Shipcity')" style="display:none">                         
@@ -397,7 +397,8 @@ if ($finalquote != "") {
                             <label>ZipCode <span class="base-color">*</span></label>
                             <input type="text" tabindex="11" id="Shippostcode" name="Shippostcode" onchange="fetchavatax('Shippostcode')" class="input-field postal_code" placeholder="Zipcode..." value="<?php echo $Shippostcode; ?>" required />
                             <div class="input-validation"></div>
-                            <br><div id="Shippostcode_validate" style="color:red;"> </div>
+                            <br>
+                            <div id="Shippostcode_validate" style="color:red;"> </div>
                           </div>
 
                         </div>
@@ -490,7 +491,7 @@ if ($finalquote != "") {
                           <div class="form-element">
                             <label>ZipCode <span class="base-color">*</span></label>
                             <input type="text" tabindex="24" id="postcode" name="postcode" class="input-field postal_code" placeholder="Zipcode..." value="<?php echo $Billpostcode; ?>" required />
-                            <div class="input-validation"></div>                            
+                            <div class="input-validation"></div>
                           </div>
 
                         </div>
@@ -650,7 +651,7 @@ if ($finalquote != "") {
                       <br>
                       <button class="submit-btn" id="stripepaynow" style="display:none;height:40px;margin-top: 10px;width: 100%"><span>PAY NOW</span></button>
                     </div>
-                    <?php
+                  <?php
                   }
 
                   if ($store_payment_gateway == 'Braintree') {

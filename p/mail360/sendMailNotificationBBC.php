@@ -15,7 +15,7 @@ function success_response($status) {
   else if($status === "Failed")
   {
     $data = array("Code"=>"500","Message"=>"Invalid Data");
-    $mail->Debugoutput='error_log'; 
+    $mail->Debugoutput='error_log';
   }
   header('Content-Type: application/json');
   echo json_encode($data);
@@ -53,7 +53,7 @@ if($auth === $sha512_Auth_key)
     // 	$mail->Password   = "Qux07367";            // SMTP server password
     // 	$mail->From       = "hello@bestaccessdoors.com";
         $mail->Username   = "bestorders@bestaccessdoors.com";     // SMTP server username
-    	$mail->Password   = "Duw22177";            // SMTP server password
+    	$mail->Password   = "Nuz66790";            // SMTP server password
     	$mail->From       = "bestorders@bestaccessdoors.com";
     	$mail->FromName   = "Best Access Doors";
 
@@ -66,30 +66,30 @@ if($auth === $sha512_Auth_key)
         $mail->AddBCC($BCCaddress);
       }
     // 	$mail->AddBCC('tharmendheran@bizappln.com');
-    $mail->AddBCC('prashanth@bizappln.com');
+    // $mail->AddBCC('prashanth@bizappln.com');
     	$mail->Subject = $mail_data['Subject'];
     	$mail->Body = $mail_data['Message'];
-    	 
+
     	$mail->IsHTML(true);
       $mail->Send();
-      $mail = null; 
+      $mail = null;
     	log_message('Notification Sent Successfully: '.json_encode($mail_data));
     	success_response("Success".json_encode($mail_data));
     }
     catch (phpmailerException $e)
-    { 
+    {
      log_message("PHPMailer Error: ".$e->errorMessage());
      success_response("PHPMailer Error: ".$e->errorMessage());
-    }catch (Exception $e) { 
+    }catch (Exception $e) {
         log_message("Exception Error: ".$e->errorMessage());
         success_response("Exception Error: ".$e->errorMessage());
-    }catch (Error $e) {  
+    }catch (Error $e) {
         log_message("Error: ".$e->errorMessage());
         success_response("Error: ".$e->errorMessage());
     }
-  } 
+  }
 }
-else { 
+else {
   $error = "500: Unauthorized Request";
   log_message($error);
 }
