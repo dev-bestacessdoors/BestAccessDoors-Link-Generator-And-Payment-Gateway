@@ -53,7 +53,7 @@ if($auth === $sha512_Auth_key)
     // 	$mail->Password   = "Qux07367";            // SMTP server password
     // 	$mail->From       = "hello@bestaccessdoors.com";
         $mail->Username   = "bestorders@bestaccessdoors.com";     // SMTP server username
-    	$mail->Password   = "0@9zNJOKJ17J9Ot";            // SMTP server password
+    	$mail->Password   = "7NhZe8qKvIW4N8jq6p";            // SMTP server password
     	$mail->From       = "bestorders@bestaccessdoors.com";
     	$mail->FromName   = "Best Access Doors";
 
