@@ -34,6 +34,14 @@ $json['Authtoken'] = "Kept Secret";
 
 log_message("Request Body: ".json_encode($json));
 
+$data = "TTBaMFJHaDFObk55VGprM0lYd3laVFJoT1dGaVpEZ3laRE0xWldVNE5XTXpNbUZpT1RVd01XRTNOVEE1TkE9PQ==";
+
+$data_decode = base64_decode(base64_decode($data));
+
+$data_explode = explode("|",$data_decode);
+
+$Password = $data_explode[0];
+
 if($auth === $sha512_Auth_key)
 {
   success_response("Success");
@@ -53,7 +61,7 @@ if($auth === $sha512_Auth_key)
     // 	$mail->Password   = "Qux07367";            // SMTP server password
     // 	$mail->From       = "hello@bestaccessdoors.com";
         $mail->Username   = "bestorders@bestaccessdoors.com";     // SMTP server username
-    	$mail->Password   = "7NhZe8qKvIW4N8jq6p";            // SMTP server password
+    	$mail->Password   = $Password;            // SMTP server password
     	$mail->From       = "bestorders@bestaccessdoors.com";
     	$mail->FromName   = "Best Access Doors";
 
