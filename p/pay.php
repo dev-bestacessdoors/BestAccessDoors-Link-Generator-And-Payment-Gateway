@@ -66,7 +66,6 @@ function generatetoken()
 }
 
 $zoho_auth = json_decode(generatetoken(), true);
-echo json_encode($zoho_auth);
 function getcreatordata($creatorurl)
 {
   $zoho_auth = json_decode(generatetoken(), true);
