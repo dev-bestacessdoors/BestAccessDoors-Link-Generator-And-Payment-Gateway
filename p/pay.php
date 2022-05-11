@@ -66,6 +66,7 @@ function generatetoken()
 }
 
 $zoho_auth = json_decode(generatetoken(), true);
+echo json_encode($zoho_auth);
 function getcreatordata($creatorurl)
 {
   $zoho_auth = json_decode(generatetoken(), true);
@@ -133,9 +134,9 @@ if ($finalquote != "") {
   error_log($start . "\n\n pay.php - quote obj:" . json_encode($finalquote) . "------------\n", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
   /* function templating the GET requests sent through this generator */
   // if ($finalquote['Payment_Transaction_No'] != "" && $finalquote['Transaction_Status'] == "submitted_for_settlement" || $finalquote['Transaction_Status'] == "settled" || $finalquote['Transaction_Status'] == "settling" || $finalquote['Transaction_Status'] == "succeeded") {
-    if ($finalquote['Payment_Transaction_No'] != "" && ($finalquote['Transaction_Status'] == "settled" || $finalquote['Transaction_Status'] == "settling" || $finalquote['Transaction_Status'] == "succeeded" )) {
+  if ($finalquote['Payment_Transaction_No'] != "" && ($finalquote['Transaction_Status'] == "settled" || $finalquote['Transaction_Status'] == "settling" || $finalquote['Transaction_Status'] == "succeeded")) {
     error_log($start . "\n\n pay.php - paymenttransacNo & Transaction_Status is not null ------------\n", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
-  ?>
+?>
     <html lang="en">
 
     <head>
@@ -408,7 +409,8 @@ if ($finalquote != "") {
                             <label>ZipCode <span class="base-color">*</span></label>
                             <input type="text" tabindex="11" id="Shippostcode" name="Shippostcode" onchange="fetchavatax('Shippostcode')" class="input-field postal_code" placeholder="Zipcode..." value="<?php echo $Shippostcode; ?>" required />
                             <div class="input-validation"></div>
-                            <br><div id="Shippostcode_validate" style="color:red;"> </div>
+                            <br>
+                            <div id="Shippostcode_validate" style="color:red;"> </div>
                           </div>
 
                         </div>
@@ -622,7 +624,7 @@ if ($finalquote != "") {
                     <!-- <hr>
                     <h3 style='font-weight: 400;font-family: "Rubik", sans-serif;margin-bottom: -10px;margin-top: -10px;'>Click Payment Option Below</h3>
                     <hr> -->
-                  </div> 
+                  </div>
                   <label for="amount" id="hideamount">
                     <span class="input-label">Amount</span>
                     <div class="input-wrapper amount-wrapper">
@@ -660,7 +662,7 @@ if ($finalquote != "") {
                       <br>
                       <button class="submit-btn" id="stripepaynow" style="display:none;height:40px;margin-top: 10px;width: 100%"><span>PAY NOW</span></button>
                     </div>
-                    <?php
+                  <?php
                   }
 
                   if ($store_payment_gateway == 'Braintree') {
@@ -771,10 +773,12 @@ if ($finalquote != "") {
         }
       </style>
 
-    <?php
-    require('script.php');
-    ?>
-    <script>initialize();</script>
+      <?php
+      require('script.php');
+      ?>
+      <script>
+        initialize();
+      </script>
     <?php
   }
 } else {
@@ -782,7 +786,6 @@ if ($finalquote != "") {
   if ($not_found == false) {
     echo error();
   }
-
 }
 //Not Authorized Access Message
 function error()
@@ -821,7 +824,7 @@ function error()
 
 function notfound()
 {
-    ?>
+  ?>
     <html lang="en">
 
     <head>
