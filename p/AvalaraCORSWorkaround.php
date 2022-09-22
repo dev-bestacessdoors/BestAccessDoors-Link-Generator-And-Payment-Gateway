@@ -6,7 +6,7 @@ $shipstate = $_GET["shipstate"];
 
 // echo "ZipCode: ".$zipcode."<br> Shipcity: ".$Shipcity."<br> Shipstate: ".$shipstate."<br>";
 
-$url = 'https://1.door-pay.com/api/avalatax/byzip/' . $zipcode . '/' . rawurlencode($Shipcity) . '::' . $shipstate;
+$url = 'https://1.door-pay.com/api/avalatax/byzip/' . $zipcode . '/' . rawurlencode($Shipcity) . '::' . rawurlencode($shipstate);
 
 echo $url . "<br>";
 
