@@ -212,7 +212,7 @@ if ($finalquote != "") {
     }
 
     //ST - gateway
-    if ($Storedetails['Payment_Gateway1'] == 'Stripe' && $Storedetails['Payment_gateway_Mode'] == 'Test Mode') {
+    if ($Storedetails['Payment_Gateway1'] == 'Stripe' && $Storedetails['Payment_gateway_Mode'] == 'Test Mode' || isset($_GET['paymode']) && $_GET['paymode'] == 'sandbox') {
       $store_publishedKey = $Storedetails['Published_Key_Test'];
       $store_secretkey = $Storedetails['Secret_Key_Test'];
       error_log($start . "\n\n pay.php - stripe -test mode ------------\n", 3, "logs/pay/pay-log" . date("d-m-Y") . ".log");
